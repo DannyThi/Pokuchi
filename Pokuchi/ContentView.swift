@@ -8,16 +8,18 @@
 import SwiftUI
 
 struct ContentView: View {
-    var body: some View {
-        Text("Hello, world!")
-            .padding()
+   @ObservedObject var board: Board
+   
+   var body: some View {
+      Text("Hello, world!")
+         .padding()
       
-       
-    }
+      
+   }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+      ContentView(board: Board(rows: 5, columns: 5, totalMines: 3))
     }
 }

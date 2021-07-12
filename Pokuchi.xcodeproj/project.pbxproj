@@ -13,7 +13,19 @@
 		97091C28269AC43200D802C5 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97091C27269AC43200D802C5 /* Preview Assets.xcassets */; };
 		97091C30269AC4B000D802C5 /* Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97091C2F269AC4B000D802C5 /* Cell.swift */; };
 		97091C32269ACEF500D802C5 /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97091C31269ACEF500D802C5 /* Board.swift */; };
+		97091C34269C932200D802C5 /* LinkedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97091C33269C932200D802C5 /* LinkedList.swift */; };
+		97091C3C269CA89400D802C5 /* PokuchiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97091C3B269CA89400D802C5 /* PokuchiTests.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		97091C3E269CA89400D802C5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 97091C15269AC43000D802C5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 97091C1C269AC43000D802C5;
+			remoteInfo = Pokuchi;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		97091C1D269AC43000D802C5 /* Pokuchi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pokuchi.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -24,10 +36,21 @@
 		97091C29269AC43200D802C5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		97091C2F269AC4B000D802C5 /* Cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cell.swift; sourceTree = "<group>"; };
 		97091C31269ACEF500D802C5 /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
+		97091C33269C932200D802C5 /* LinkedList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkedList.swift; sourceTree = "<group>"; };
+		97091C39269CA89400D802C5 /* PokuchiTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PokuchiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		97091C3B269CA89400D802C5 /* PokuchiTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokuchiTests.swift; sourceTree = "<group>"; };
+		97091C3D269CA89400D802C5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		97091C1A269AC43000D802C5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		97091C36269CA89400D802C5 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -41,6 +64,7 @@
 			isa = PBXGroup;
 			children = (
 				97091C1F269AC43000D802C5 /* Pokuchi */,
+				97091C3A269CA89400D802C5 /* PokuchiTests */,
 				97091C1E269AC43000D802C5 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -49,6 +73,7 @@
 			isa = PBXGroup;
 			children = (
 				97091C1D269AC43000D802C5 /* Pokuchi.app */,
+				97091C39269CA89400D802C5 /* PokuchiTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -59,6 +84,7 @@
 				97091C20269AC43000D802C5 /* PokuchiApp.swift */,
 				97091C22269AC43000D802C5 /* ContentView.swift */,
 				97091C2F269AC4B000D802C5 /* Cell.swift */,
+				97091C33269C932200D802C5 /* LinkedList.swift */,
 				97091C31269ACEF500D802C5 /* Board.swift */,
 				97091C24269AC43200D802C5 /* Assets.xcassets */,
 				97091C29269AC43200D802C5 /* Info.plist */,
@@ -73,6 +99,15 @@
 				97091C27269AC43200D802C5 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		97091C3A269CA89400D802C5 /* PokuchiTests */ = {
+			isa = PBXGroup;
+			children = (
+				97091C3B269CA89400D802C5 /* PokuchiTests.swift */,
+				97091C3D269CA89400D802C5 /* Info.plist */,
+			);
+			path = PokuchiTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -95,6 +130,24 @@
 			productReference = 97091C1D269AC43000D802C5 /* Pokuchi.app */;
 			productType = "com.apple.product-type.application";
 		};
+		97091C38269CA89400D802C5 /* PokuchiTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 97091C40269CA89400D802C5 /* Build configuration list for PBXNativeTarget "PokuchiTests" */;
+			buildPhases = (
+				97091C35269CA89400D802C5 /* Sources */,
+				97091C36269CA89400D802C5 /* Frameworks */,
+				97091C37269CA89400D802C5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				97091C3F269CA89400D802C5 /* PBXTargetDependency */,
+			);
+			name = PokuchiTests;
+			productName = PokuchiTests;
+			productReference = 97091C39269CA89400D802C5 /* PokuchiTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -106,6 +159,10 @@
 				TargetAttributes = {
 					97091C1C269AC43000D802C5 = {
 						CreatedOnToolsVersion = 12.5.1;
+					};
+					97091C38269CA89400D802C5 = {
+						CreatedOnToolsVersion = 12.5.1;
+						TestTargetID = 97091C1C269AC43000D802C5;
 					};
 				};
 			};
@@ -123,6 +180,7 @@
 			projectRoot = "";
 			targets = (
 				97091C1C269AC43000D802C5 /* Pokuchi */,
+				97091C38269CA89400D802C5 /* PokuchiTests */,
 			);
 		};
 /* End PBXProject section */
@@ -137,6 +195,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		97091C37269CA89400D802C5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -146,12 +211,29 @@
 			files = (
 				97091C23269AC43000D802C5 /* ContentView.swift in Sources */,
 				97091C21269AC43000D802C5 /* PokuchiApp.swift in Sources */,
+				97091C34269C932200D802C5 /* LinkedList.swift in Sources */,
 				97091C32269ACEF500D802C5 /* Board.swift in Sources */,
 				97091C30269AC4B000D802C5 /* Cell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		97091C35269CA89400D802C5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				97091C3C269CA89400D802C5 /* PokuchiTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		97091C3F269CA89400D802C5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 97091C1C269AC43000D802C5 /* Pokuchi */;
+			targetProxy = 97091C3E269CA89400D802C5 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		97091C2A269AC43200D802C5 /* Debug */ = {
@@ -314,6 +396,46 @@
 			};
 			name = Release;
 		};
+		97091C41269CA89400D802C5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = SE8477RD2K;
+				INFOPLIST_FILE = PokuchiTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.HaiLongDannyThi.PokuchiTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Pokuchi.app/Pokuchi";
+			};
+			name = Debug;
+		};
+		97091C42269CA89400D802C5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = SE8477RD2K;
+				INFOPLIST_FILE = PokuchiTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.HaiLongDannyThi.PokuchiTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Pokuchi.app/Pokuchi";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -331,6 +453,15 @@
 			buildConfigurations = (
 				97091C2D269AC43200D802C5 /* Debug */,
 				97091C2E269AC43200D802C5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		97091C40269CA89400D802C5 /* Build configuration list for PBXNativeTarget "PokuchiTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				97091C41269CA89400D802C5 /* Debug */,
+				97091C42269CA89400D802C5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

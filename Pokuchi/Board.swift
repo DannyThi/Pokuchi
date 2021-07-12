@@ -7,76 +7,185 @@
 
 import Foundation
 
-// keep this generic so it can be used anywhere
-
 struct Cell {
-   var x: Int
-   var y: Int
-   var number: Int = 0
+   let row: Int
+   let col: Int
+   var minesInProximity: Int = 0
    var isMine: Bool {
-      number == -1 ? true : false
-   }
-}
-
-class Board {
-   private(set) var matrix: [[Cell]] = []
-   private(set) var totalMines: Int
-   
-   private var mineLocation: [(Int,Int)]?
-
-   var rows: Int { matrix.count }
-   var columns: Int { matrix[0].count }
-   var remainingCells: Int { rows * columns - totalMines }
-   
-   init(rows: Int, columns: Int, totalMines: Int) {
-      self.totalMines = totalMines
-      
-      self.buildBoard(rows: rows, columns: columns)
-      self.placeMines()
+      minesInProximity == -1 ? true : false
    }
    
-   private func buildBoard(rows: Int, columns: Int) {
-      for y in 0..<columns {
-         var row = [Cell]()
-         for x in 0..<rows {
-            let cell = Cell(x: x, y: y)
-            row.append(cell)
-         }
-         self.matrix.append(row)
+   var isExposed: Bool = false
+   var isFlagged: Bool = false
+
+   // RETURN TRUE IF THIS IS A MINE
+   @discardableResult
+   mutating func exposeCell() -> Bool {
+      if !isFlagged && !isExposed {
+         self.isExposed = true
+      }
+      return isMine
+   }
+   
+   mutating func flag() {
+      if !isExposed {
+         self.isFlagged.toggle()
       }
    }
    
+   
+}
+
+struct BoardLocation {
+   let row: Int
+   let col: Int
+   
+   init(_ row: Int, _ col: Int) {
+      self.row = row
+      self.col = col
+   }
+}
+
+
+class Board: ObservableObject {
+   private var matrix: [[Cell]] = []
+   
+   private let totalMines: Int
+   private var mineLocations = [BoardLocation]()
+
+   var rows: Int { matrix.count }
+   var columns: Int { matrix[0].count }
+   
+   var remainingMines: Int {
+      let minesFlagged = mineLocations.filter { matrix[$0.row][$0.col].isFlagged }.count
+      return totalMines - minesFlagged
+   }
+   
+   init(rows: Int, columns: Int, totalMines: Int) {
+      self.totalMines = totalMines > columns * rows ? (columns * rows) - 1 : totalMines
+      
+      self.buildBoard(rows: rows, columns: columns)
+      self.placeMines()
+      self.printBoard()
+   }
+
+   func exposeCells(fromCell cell: Cell) {
+      
+   }
+   /*
+    public void expandBlank(Cell cell) {
+       int[][] deltas = {
+             {-1, -1}, {-1, 0}, {-1, 1},
+             { 0, -1},          { 0, 1},
+             { 1, -1}, { 1, 0}, { 1, 1}
+       };
+       
+       Queue<Cell> toExplore = new LinkedList<Cell>();
+       toExplore.add(cell);
+       
+       while (!toExplore.isEmpty()) {
+          Cell current = toExplore.remove();
+          
+          for (int[] delta : deltas) {
+             int r = current.getRow() + delta[0];
+             int c = current.getColumn() + delta[1];
+             
+             if (inBounds(r, c)) {
+                Cell neighbor = cells[r][c];
+                if (flipCell(neighbor) && neighbor.isBlank()) {
+                   toExplore.add(neighbor);
+                }
+             }
+          }
+       }
+    }
+    */
+
+}
+
+// INITIALIZATION
+extension Board {
+   private func buildBoard(rows: Int, columns: Int) {
+      for col in 0..<columns {
+         var fullRow = [Cell]()
+         for row in 0..<rows {
+            let cell = Cell(row: row, col: col)
+            fullRow.append(cell)
+         }
+         self.matrix.append(fullRow)
+      }
+   }
+   
+   //TODO: WE SHOULD PLACE MINES AND SHUFFLE BOARD
    private func placeMines() {
       var mineCounter = self.totalMines
       
       while mineCounter > 0 {
-         let x = Int.random(in: 0..<rows)
-         let y = Int.random(in: 0..<columns)
+         let row = Int.random(in: 0..<rows)
+         let col = Int.random(in: 0..<columns)
          
-         if !matrix[y][x].isMine {
-            matrix[y][x].number = -1
+         if cellAt(row, col).isMine == false {
+            matrix[row][col].minesInProximity = -1
+            incrementMineBoundryCount(row, col)
+            mineLocations.append(.init(row, col))
             mineCounter -= 1
          }
-         
-         // CHECK BOUNDRY AND INCREMENT NUMBER BY 1
-         if y-1 > 0, cellAt(x,y-1).isMine == false { incrementAtPosition(x,y-1) }         // UP
-         if y+1 < rows, cellAt(x, y+1).isMine == false { incrementAtPosition(x, y+1) }    // DOWN
-         if x-1 > 0, cellAt(x-1, y).isMine == false { incrementAtPosition(x-1, y) }       // LEFT
-         if x+1 < columns, cellAt(x+1, y).isMine == false { incrementAtPosition(x+1, y) } // RIGHT
-         
-         if x-1 > 0, y-1 > 0, cellAt(x-1, y-1).isMine == false { incrementAtPosition(x-1, y-1) }         // UP&LEFT
-         if x+1 < columns, y-1 > 0, cellAt(x+1, y-1).isMine == false { incrementAtPosition(x+1, y-1) }   // UP&RIGHT
-         if x-1 < columns, y+1 > 0, cellAt(x-1, y+1).isMine == false { incrementAtPosition(x-1, y+1) }   // DOWN&LEFT
-         if x+1 < columns, y+1 > 0, cellAt(x+1, y+1).isMine == false { incrementAtPosition(x+1, y+1) }   // DOWN&RIGHT
       }
    }
    
-   private func incrementAtPosition(_ x: Int, _ y: Int) {
-      self.matrix[x][y].number += 1
+
+   // CHECK BOUNDRY AND INCREMENT NUMBER BY 1
+   private func incrementMineBoundryCount(_ row: Int, _ col: Int) {
+      for delta in self.deltas {
+         let row = row + delta[0]
+         let col = col + delta[1]
+         if withinBounds(row, col), cellAt(row, col).isMine == false {
+            incrementAtPosition(row, col)
+         }
+      }
+   }
+}
+
+
+// HELPER FUNCTIONS
+extension Board {
+   
+   private var deltas: [[Int]] {
+      [
+         [-1, -1], [-1, 0], [-1, 1],
+         [ 0, -1],          [ 0, 1],
+         [ 1, -1], [ 1, 0], [ 1, 1]
+      ]
+   }
+
+   private func withinBounds(_ row: Int, _ col: Int) -> Bool {
+      return row >= 0 && row < rows && col >= 0 && col < columns
    }
    
-   private func cellAt(_ x:Int, _ y:Int) -> Cell {
-      return matrix[y][x]
+   private func incrementAtPosition(_ row: Int, _ col: Int) {
+      self.matrix[row][col].minesInProximity += 1
+   }
+   
+   func cellAt(_ row: Int, _ col: Int) -> Cell {
+      return matrix[row][col]
+   }
+}
+
+
+// DEBUG
+extension Board {
+   private func printBoard() {
+      for col in 0..<columns {
+         print("||", terminator: "")
+         for row in 0..<rows {
+            var text = " "
+            if cellAt(row, col).minesInProximity >= 0 {
+               text += " "
+            }
+            print(text + "\(cellAt(row, col).minesInProximity) |", terminator: "")
+         }
+         print("|")
+      }
    }
 }
 
@@ -145,32 +254,7 @@ class Board {
        }
     }
     
-    private boolean inBounds(int row, int column) {
-       return row >= 0 && row < nRows && column >= 0 && column < nColumns;
-    }
-    
-    /* Set the cells around the bombs to the right number. Although
-     * the bombs have been shuffled, the reference in the bombs array
-     * is still to same object. */
-    private void setNumberedCells() {
-       int[][] deltas = { // Offsets of 8 surrounding cells
-             {-1, -1}, {-1, 0}, {-1, 1},
-             { 0, -1},          { 0, 1},
-             { 1, -1}, { 1, 0}, { 1, 1}
-       };
-       for (Cell bomb : bombs) {
-          int row = bomb.getRow();
-          int col = bomb.getColumn();
-          for (int[] delta : deltas) {
-             int r = row + delta[0];
-             int c = col + delta[1];
-             if (inBounds(r, c)) {
-                cells[r][c].incrementNumber();
-             }
-          }
-       }
-    }
-    
+
     public void printBoard(boolean showUnderside) {
        System.out.println();
        System.out.print("   ");
