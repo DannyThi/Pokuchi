@@ -7,15 +7,16 @@
 
 import Foundation
 
-struct Cell {
+struct CellModel {
    let row: Int
    let col: Int
    
+   private(set) var isGuess: Bool = false
+   private(set) var isRevealed: Bool = false
+   
    private(set) var isBomb: Bool
    private(set) var number: Int
-   private(set) var isExposed: Bool = false
-   private(set) var isGuess: Bool = false
-   
+
    init(row: Int, col: Int, isBomb: Bool, number: Int = 0) {
       self.row = row
       self.col = col
@@ -25,7 +26,7 @@ struct Cell {
    
    // Returns true if its a bomb
    mutating func flip() -> Bool {
-      self.isExposed = true
+      self.isRevealed = true
       return !isBomb
    }
    
@@ -34,7 +35,8 @@ struct Cell {
    }
    
    mutating func toggleGuess() -> Bool {
-      if !isExposed {
+      if !isRevealed {
+         
          isGuess.toggle()
       }
       return isGuess

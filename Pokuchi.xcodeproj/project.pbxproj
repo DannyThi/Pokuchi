@@ -12,6 +12,7 @@
 		97091C25269AC43200D802C5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97091C24269AC43200D802C5 /* Assets.xcassets */; };
 		97091C28269AC43200D802C5 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97091C27269AC43200D802C5 /* Preview Assets.xcassets */; };
 		97091C30269AC4B000D802C5 /* Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97091C2F269AC4B000D802C5 /* Cell.swift */; };
+		97091C32269ACEF500D802C5 /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97091C31269ACEF500D802C5 /* Board.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		97091C27269AC43200D802C5 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		97091C29269AC43200D802C5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		97091C2F269AC4B000D802C5 /* Cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cell.swift; sourceTree = "<group>"; };
+		97091C31269ACEF500D802C5 /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +59,7 @@
 				97091C20269AC43000D802C5 /* PokuchiApp.swift */,
 				97091C22269AC43000D802C5 /* ContentView.swift */,
 				97091C2F269AC4B000D802C5 /* Cell.swift */,
+				97091C31269ACEF500D802C5 /* Board.swift */,
 				97091C24269AC43200D802C5 /* Assets.xcassets */,
 				97091C29269AC43200D802C5 /* Info.plist */,
 				97091C26269AC43200D802C5 /* Preview Content */,
@@ -143,6 +146,7 @@
 			files = (
 				97091C23269AC43000D802C5 /* ContentView.swift in Sources */,
 				97091C21269AC43000D802C5 /* PokuchiApp.swift in Sources */,
+				97091C32269ACEF500D802C5 /* Board.swift in Sources */,
 				97091C30269AC4B000D802C5 /* Cell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
