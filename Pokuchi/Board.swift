@@ -32,8 +32,6 @@ struct Cell {
          self.isFlagged.toggle()
       }
    }
-   
-   
 }
 
 struct BoardLocation {
@@ -70,36 +68,28 @@ class Board: ObservableObject {
    }
 
    func exposeCells(fromCell cell: Cell) {
+      let queue = Queue<Cell>()
       
+      queue.enqueue(cell)
+      
+      while !queue.isEmpty {
+         let node = queue.dequeue()
+         
+         for delta in deltas {
+            let row = node.row + delta[0]
+            let col = node.col + delta[1]
+            
+            if withinBounds(row, col) {
+               let adjacent = matrix[row][col]
+               
+               // FIXME: - what cells get queued?
+               if !adjacent.isExposed && !adjacent.isMine {
+                  queue.enqueue(adjacent)
+               }
+            }
+         }
+      }
    }
-   /*
-    public void expandBlank(Cell cell) {
-       int[][] deltas = {
-             {-1, -1}, {-1, 0}, {-1, 1},
-             { 0, -1},          { 0, 1},
-             { 1, -1}, { 1, 0}, { 1, 1}
-       };
-       
-       Queue<Cell> toExplore = new LinkedList<Cell>();
-       toExplore.add(cell);
-       
-       while (!toExplore.isEmpty()) {
-          Cell current = toExplore.remove();
-          
-          for (int[] delta : deltas) {
-             int r = current.getRow() + delta[0];
-             int c = current.getColumn() + delta[1];
-             
-             if (inBounds(r, c)) {
-                Cell neighbor = cells[r][c];
-                if (flipCell(neighbor) && neighbor.isBlank()) {
-                   toExplore.add(neighbor);
-                }
-             }
-          }
-       }
-    }
-    */
 
 }
 

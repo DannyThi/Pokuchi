@@ -19,8 +19,7 @@ class PokuchiTests: XCTestCase {
       list.append(value: 20)
       list.removeNode(at: 0)
       XCTAssert(list[0] == 10)
-      
-
+   
       
    }
 

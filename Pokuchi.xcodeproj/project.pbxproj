@@ -15,6 +15,8 @@
 		97091C32269ACEF500D802C5 /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97091C31269ACEF500D802C5 /* Board.swift */; };
 		97091C34269C932200D802C5 /* LinkedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97091C33269C932200D802C5 /* LinkedList.swift */; };
 		97091C3C269CA89400D802C5 /* PokuchiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97091C3B269CA89400D802C5 /* PokuchiTests.swift */; };
+		97091C44269D1B8F00D802C5 /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97091C43269D1B8F00D802C5 /* Queue.swift */; };
+		97091C46269D4CB200D802C5 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97091C45269D4CB200D802C5 /* Game.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +42,8 @@
 		97091C39269CA89400D802C5 /* PokuchiTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PokuchiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		97091C3B269CA89400D802C5 /* PokuchiTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokuchiTests.swift; sourceTree = "<group>"; };
 		97091C3D269CA89400D802C5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		97091C43269D1B8F00D802C5 /* Queue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
+		97091C45269D4CB200D802C5 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +89,8 @@
 				97091C22269AC43000D802C5 /* ContentView.swift */,
 				97091C2F269AC4B000D802C5 /* Cell.swift */,
 				97091C33269C932200D802C5 /* LinkedList.swift */,
+				97091C43269D1B8F00D802C5 /* Queue.swift */,
+				97091C45269D4CB200D802C5 /* Game.swift */,
 				97091C31269ACEF500D802C5 /* Board.swift */,
 				97091C24269AC43200D802C5 /* Assets.xcassets */,
 				97091C29269AC43200D802C5 /* Info.plist */,
@@ -210,6 +216,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				97091C23269AC43000D802C5 /* ContentView.swift in Sources */,
+				97091C44269D1B8F00D802C5 /* Queue.swift in Sources */,
+				97091C46269D4CB200D802C5 /* Game.swift in Sources */,
 				97091C21269AC43000D802C5 /* PokuchiApp.swift in Sources */,
 				97091C34269C932200D802C5 /* LinkedList.swift in Sources */,
 				97091C32269ACEF500D802C5 /* Board.swift in Sources */,
