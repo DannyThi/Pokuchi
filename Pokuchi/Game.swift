@@ -13,7 +13,6 @@ class Game: ObservableObject {
    @Published private var internalBoard: Board<String> // our model
    
    // PUBLIC
-//   var board: [Cell] { internalBoard.flattened() }
    var rows: Int { internalBoard.rows }
    var columns: Int { internalBoard.columns }
    
@@ -34,6 +33,7 @@ class Game: ObservableObject {
       
       guard !cell.isMine else {
          print("CLICKED ON MINE: END GAME")
+         //TODO: End game
          return
       }
       

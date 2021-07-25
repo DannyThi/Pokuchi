@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct GameView: View {
    
    @ObservedObject var game: Game
    
@@ -28,7 +28,12 @@ struct ContentView: View {
                      CellView(cell: cell)
                         .aspectRatio(1, contentMode: .fit)
                         .onTapGesture {
+                           // highlight cell ??
                            self.game.exposeCell(cell)
+                           
+                        }
+                        .onLongPressGesture {
+                           // Sub menu??
                         }
                   }
                }
@@ -66,7 +71,7 @@ struct CellView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-      ContentView(game: Game(rows: 10, columns: 10, mines: 10))
+      GameView(game: Game(rows: 10, columns: 10, mines: 10))
          .preferredColorScheme(.dark)
     }
 }

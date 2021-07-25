@@ -43,9 +43,10 @@ struct Board<CellContent> {
 
    mutating func exposeCells(location: BoardLocation) {
       let queue = Queue<Cell>()
+      var visited = Array(repeating: Array(repeating: false, count: self.columns), count: rows)
       
       queue.enqueue(matrix[location.row][location.col])
-      
+      visited[location.row][location.col] = true
       var count:Int = 0
       
       while !queue.isEmpty {
@@ -61,18 +62,20 @@ struct Board<CellContent> {
                
                if withinBounds(row, col) {
                   if !node.isExposed && !node.isMine {
-                     queue.enqueue(matrix[row][col])
+                     if !visited[row][col] {
+                        queue.enqueue(matrix[row][col])
+                        visited[row][col] = true
+                     }
+                     #warning("we sometimes have thousands of items in the queue. we need to place the item in the queue only once.")
                   }
                }
             }
          }
          
          print("Queue: \(queue.count)")
-
       }
-      
    }
-
+   
 }
 
 // INITIALIZATION
@@ -88,7 +91,10 @@ extension Board {
       }
    }
    
-   //TODO: WE SHOULD PLACE MINES AND SHUFFLE BOARD
+   // TODO: WE SHOULD PLACE MINES AND SHUFFLE BOARD
+   // if we have a 100 cell board and 99 mines, the algorithm can take too long to place all the mines.
+   // its better to place the mines first along with the empty cells, shuffle the board, and edit the board
+   // numbers around the mines.
    private mutating func placeMines() {
       var mineCounter = self.totalMines
       

@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		97091C21269AC43000D802C5 /* PokuchiApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97091C20269AC43000D802C5 /* PokuchiApp.swift */; };
-		97091C23269AC43000D802C5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97091C22269AC43000D802C5 /* ContentView.swift */; };
+		97091C23269AC43000D802C5 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97091C22269AC43000D802C5 /* GameView.swift */; };
 		97091C25269AC43200D802C5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97091C24269AC43200D802C5 /* Assets.xcassets */; };
 		97091C28269AC43200D802C5 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97091C27269AC43200D802C5 /* Preview Assets.xcassets */; };
 		97091C30269AC4B000D802C5 /* Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97091C2F269AC4B000D802C5 /* Cell.swift */; };
@@ -32,7 +32,7 @@
 /* Begin PBXFileReference section */
 		97091C1D269AC43000D802C5 /* Pokuchi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pokuchi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		97091C20269AC43000D802C5 /* PokuchiApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokuchiApp.swift; sourceTree = "<group>"; };
-		97091C22269AC43000D802C5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		97091C22269AC43000D802C5 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
 		97091C24269AC43200D802C5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		97091C27269AC43200D802C5 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		97091C29269AC43200D802C5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -86,7 +86,7 @@
 			isa = PBXGroup;
 			children = (
 				97091C20269AC43000D802C5 /* PokuchiApp.swift */,
-				97091C22269AC43000D802C5 /* ContentView.swift */,
+				97091C22269AC43000D802C5 /* GameView.swift */,
 				97091C2F269AC4B000D802C5 /* Cell.swift */,
 				97091C33269C932200D802C5 /* LinkedList.swift */,
 				97091C43269D1B8F00D802C5 /* Queue.swift */,
@@ -215,7 +215,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				97091C23269AC43000D802C5 /* ContentView.swift in Sources */,
+				97091C23269AC43000D802C5 /* GameView.swift in Sources */,
 				97091C44269D1B8F00D802C5 /* Queue.swift in Sources */,
 				97091C46269D4CB200D802C5 /* Game.swift in Sources */,
 				97091C21269AC43000D802C5 /* PokuchiApp.swift in Sources */,

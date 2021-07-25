@@ -36,3 +36,10 @@ struct Cell: Identifiable, Hashable {
       }
    }
 }
+
+
+enum CellState {
+   case isMine
+   case isInProximityToMines(Int)
+   case isEmpty
+}
