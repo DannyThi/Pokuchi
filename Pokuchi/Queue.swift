@@ -10,7 +10,7 @@ import Foundation
 class Queue<T> {
    private var first: Node<T>?
    private var last: Node<T>?
-   
+   private var internalCount: Int = 0
    func peek() -> T? {
       self.first?.value
    }
@@ -24,6 +24,7 @@ class Queue<T> {
       if first == nil {
          self.first = self.last     // Our last item is also our first item if we have no items.
       }
+      internalCount += 1
    }
    
    func dequeue() -> T {
@@ -34,11 +35,16 @@ class Queue<T> {
       if self.first == nil {
          self.last = nil
       }
+      internalCount -= 1
       return value
    }
    
    var isEmpty: Bool {
       self.first == nil
+   }
+   
+   var count: Int {
+      return internalCount
    }
 }
 

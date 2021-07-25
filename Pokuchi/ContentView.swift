@@ -8,18 +8,31 @@
 import SwiftUI
 
 struct ContentView: View {
-   var cellContent = ["🐶","🐱","🐭","🐹","🐰","🦊","🐻","🐼","🐻‍❄️","🐨","🐯","🦁","🐮"]
-   @State var count = 11
+   
+   @ObservedObject var game: Game
+   
    var body: some View {
       ScrollView {
          VStack {
-            LazyVGrid(columns: [GridItem(),GridItem()]) {
-               ForEach(cellContent[0..<count], id: \.self) { emoji in
-                  CellView(content: emoji)
-                     .aspectRatio(1, contentMode: .fit)
+            /*
+             LazyVGrid takes in an array of GridItems. Each GridItem represents a
+             column. GridItems can have enum values to determine how they are represented
+             on screen (adaptive,fixed, etc.).
+             */
+            let gridItems = Array(repeating: GridItem(spacing: 1), count: game.columns)
+            
+            LazyVGrid(columns: gridItems, spacing: 1) {
+               ForEach(0..<game.rows) { row in
+                  ForEach(0..<game.columns) { col in
+                     let cell = game.cellAt(row,col)
+                     CellView(cell: cell)
+                        .aspectRatio(1, contentMode: .fit)
+                        .onTapGesture {
+                           self.game.exposeCell(cell)
+                        }
+                  }
                }
             }
-            .foregroundColor(.red)
          }
       }
       .padding(.horizontal)
@@ -27,29 +40,33 @@ struct ContentView: View {
 }
 
 struct CellView: View {
-   @State var isFaceUp: Bool = true
-   var content: String
+   var cell: Cell
 
    var body: some View {
       ZStack {
-         let shape = RoundedRectangle(cornerRadius: 10)
-         if isFaceUp {
+         /*
+          We can declare temporary variables within view builders. This is useful
+          when we have to use a copy of the item multiple items within the scope.
+          */
+         let shape = RoundedRectangle(cornerRadius: 5)
+         
+         if cell.isExposed {
             shape.fill().foregroundColor(.white)
-            shape.stroke(lineWidth: 2)
-            Text(content).font(.largeTitle)
+            shape.stroke(lineWidth: 1.0)
+            Text("\(cell.minesInProximity)").foregroundColor(Color(.black))
          } else {
-            shape.fill()
+            shape.fill().foregroundColor(.gray)
+//            Text("\(cell.minesInProximity)").foregroundColor(Color(.black))
+
+//            shape.stroke(lineWidth: 0.5).foregroundColor(.white)
          }
-      }
-      .onTapGesture {
-         isFaceUp = !isFaceUp
       }
    }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-      ContentView()
+      ContentView(game: Game(rows: 10, columns: 10, mines: 10))
          .preferredColorScheme(.dark)
     }
 }

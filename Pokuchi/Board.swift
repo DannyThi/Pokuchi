@@ -7,45 +7,16 @@
 
 import Foundation
 
-struct Cell {
-   let row: Int
-   let col: Int
-   var minesInProximity: Int = 0
-   var isMine: Bool {
-      minesInProximity == -1 ? true : false
-   }
-   
-   var isExposed: Bool = false
-   var isFlagged: Bool = false
-
-   // RETURN TRUE IF THIS IS A MINE
-   @discardableResult
-   mutating func exposeCell() -> Bool {
-      if !isFlagged && !isExposed {
-         self.isExposed = true
-      }
-      return isMine
-   }
-   
-   mutating func flag() {
-      if !isExposed {
-         self.isFlagged.toggle()
-      }
-   }
-}
-
 struct BoardLocation {
    let row: Int
    let col: Int
-   
    init(_ row: Int, _ col: Int) {
       self.row = row
       self.col = col
    }
 }
 
-
-class Board: ObservableObject {
+struct Board<CellContent> {
    private var matrix: [[Cell]] = []
    
    private let totalMines: Int
@@ -61,44 +32,55 @@ class Board: ObservableObject {
    
    init(rows: Int, columns: Int, totalMines: Int) {
       self.totalMines = totalMines > columns * rows ? (columns * rows) - 1 : totalMines
-      
       self.buildBoard(rows: rows, columns: columns)
       self.placeMines()
       self.printBoard()
    }
+   
+   func flattened() -> [Cell] {
+      return matrix.flatMap { $0 }
+   }
 
-   func exposeCells(fromCell cell: Cell) {
+   mutating func exposeCells(location: BoardLocation) {
       let queue = Queue<Cell>()
       
-      queue.enqueue(cell)
+      queue.enqueue(matrix[location.row][location.col])
+      
+      var count:Int = 0
       
       while !queue.isEmpty {
          let node = queue.dequeue()
+         self.matrix[node.row][node.col].isExposed = true // EXPOSE CELL
          
-         for delta in deltas {
-            let row = node.row + delta[0]
-            let col = node.col + delta[1]
-            
-            if withinBounds(row, col) {
-               let adjacent = matrix[row][col]
+         count += 1
+         
+         if node.minesInProximity == 0 {
+            for delta in deltas {
+               let row = node.row + delta[0]
+               let col = node.col + delta[1]
                
-               // FIXME: - what cells get queued?
-               if !adjacent.isExposed && !adjacent.isMine {
-                  queue.enqueue(adjacent)
+               if withinBounds(row, col) {
+                  if !node.isExposed && !node.isMine {
+                     queue.enqueue(matrix[row][col])
+                  }
                }
             }
          }
+         
+         print("Queue: \(queue.count)")
+
       }
+      
    }
 
 }
 
 // INITIALIZATION
 extension Board {
-   private func buildBoard(rows: Int, columns: Int) {
-      for col in 0..<columns {
+   private mutating func buildBoard(rows: Int, columns: Int) {
+      for row in 0..<rows {
          var fullRow = [Cell]()
-         for row in 0..<rows {
+         for col in 0..<columns {
             let cell = Cell(row: row, col: col)
             fullRow.append(cell)
          }
@@ -107,7 +89,7 @@ extension Board {
    }
    
    //TODO: WE SHOULD PLACE MINES AND SHUFFLE BOARD
-   private func placeMines() {
+   private mutating func placeMines() {
       var mineCounter = self.totalMines
       
       while mineCounter > 0 {
@@ -125,12 +107,12 @@ extension Board {
    
 
    // CHECK BOUNDRY AND INCREMENT NUMBER BY 1
-   private func incrementMineBoundryCount(_ row: Int, _ col: Int) {
+   private mutating func incrementMineBoundryCount(_ row: Int, _ col: Int) {
       for delta in self.deltas {
          let row = row + delta[0]
          let col = col + delta[1]
          if withinBounds(row, col), cellAt(row, col).isMine == false {
-            incrementAtPosition(row, col)
+            self.incrementAtPosition(row, col)
          }
       }
    }
@@ -152,7 +134,7 @@ extension Board {
       return row >= 0 && row < rows && col >= 0 && col < columns
    }
    
-   private func incrementAtPosition(_ row: Int, _ col: Int) {
+   private mutating func incrementAtPosition(_ row: Int, _ col: Int) {
       self.matrix[row][col].minesInProximity += 1
    }
    
