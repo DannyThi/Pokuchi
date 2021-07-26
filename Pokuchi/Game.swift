@@ -11,6 +11,7 @@ class Game: ObservableObject {
    
    // PRIVATE
    @Published private var internalBoard: Board<String> // our model
+
    
    // PUBLIC
    var rows: Int { internalBoard.rows }

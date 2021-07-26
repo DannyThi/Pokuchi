@@ -8,70 +8,65 @@
 import SwiftUI
 
 struct GameView: View {
-   
    @ObservedObject var game: Game
+   @State var selectedCell: BoardLocation?
    
    var body: some View {
-      ScrollView {
-         VStack {
-            /*
-             LazyVGrid takes in an array of GridItems. Each GridItem represents a
-             column. GridItems can have enum values to determine how they are represented
-             on screen (adaptive,fixed, etc.).
-             */
-            let gridItems = Array(repeating: GridItem(spacing: 1), count: game.columns)
-            
-            LazyVGrid(columns: gridItems, spacing: 1) {
-               ForEach(0..<game.rows) { row in
-                  ForEach(0..<game.columns) { col in
-                     let cell = game.cellAt(row,col)
-                     CellView(cell: cell)
-                        .aspectRatio(1, contentMode: .fit)
-                        .onTapGesture {
-                           // highlight cell ??
-                           self.game.exposeCell(cell)
-                           
-                        }
-                        .onLongPressGesture {
-                           // Sub menu??
-                        }
-                  }
-               }
+      VStack {
+         Group {
+            ScrollView([.horizontal, .vertical]) {
+               board
             }
          }
+         .frame(width: 500, height: 500, alignment: .center)
+         .padding()
+
+
+         Button {
+            if let location = selectedCell {
+               let cell = self.game.cellAt(location.row, location.col)
+               self.game.exposeCell(cell)
+            }
+         } label: {
+            Text("Expose cell")
+         }
+         
       }
-      .padding(.horizontal)
    }
+   
+   var board: some View {
+      BoardView(gridSize: game.columns, itemSize: 50) { (row, col) in
+         let cell = game.cellAt(row,col)
+         let selected = Binding(get: { selectedCell?.row == cell.row && selectedCell?.col == cell.col },
+                                set: { _ in })
+         CellView(cell: cell, isSelected: selected)
+            .aspectRatio(1, contentMode: .fit)
+            .onTapGesture {
+               selectedCell = BoardLocation(cell.row, cell.col)
+            }
+      }
+   }
+
 }
 
-struct CellView: View {
-   var cell: Cell
-
+struct LabelCell: View {
+   var text: String
    var body: some View {
       ZStack {
-         /*
-          We can declare temporary variables within view builders. This is useful
-          when we have to use a copy of the item multiple items within the scope.
-          */
          let shape = RoundedRectangle(cornerRadius: 5)
-         
-         if cell.isExposed {
-            shape.fill().foregroundColor(.white)
-            shape.stroke(lineWidth: 1.0)
-            Text("\(cell.minesInProximity)").foregroundColor(Color(.black))
-         } else {
-            shape.fill().foregroundColor(.gray)
-//            Text("\(cell.minesInProximity)").foregroundColor(Color(.black))
-
-//            shape.stroke(lineWidth: 0.5).foregroundColor(.white)
-         }
+         shape.fill().foregroundColor(Color(.white))
+         shape.stroke(lineWidth: 1.0).foregroundColor(Color(.systemGray4))
+         Text(text)
+            .foregroundColor(Color(.systemGray4))
       }
    }
 }
 
+
+
 struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
+   static var previews: some View {
       GameView(game: Game(rows: 10, columns: 10, mines: 10))
-         .preferredColorScheme(.dark)
-    }
+         .preferredColorScheme(.light)
+   }
 }
