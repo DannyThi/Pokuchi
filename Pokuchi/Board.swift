@@ -37,11 +37,11 @@ struct Board<CellContent> {
       self.printBoard()
    }
    
-   func flattened() -> [Cell] {
-      return matrix.flatMap { $0 }
+   mutating func flagCell(at location: BoardLocation) {
+      self.matrix[location.row][location.col].isFlagged.toggle()
    }
-
-   mutating func exposeCells(location: BoardLocation) {
+   
+   mutating func exposeCells(at location: BoardLocation) {
       let queue = Queue<Cell>()
       var visited = Array(repeating: Array(repeating: false, count: self.columns), count: rows)
       

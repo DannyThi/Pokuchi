@@ -25,6 +25,15 @@ class Game: ObservableObject {
       return internalBoard.cellAt(row, col)
    }
    
+   func flagCell(at location: BoardLocation) {
+      self.internalBoard.flagCell(at: location)
+   }
+   
+   func flagCell(_ cell: Cell) {
+      let location = BoardLocation(cell.row, cell.col)
+      self.flagCell(at: location)
+   }
+   
    func exposeCell(_ cell: Cell) {
       print("Tapped cell(x: \(cell.row), y: \(cell.col))")
       guard !cell.isExposed else {
@@ -40,7 +49,7 @@ class Game: ObservableObject {
       
       if !cell.isExposed {
          print("Tapped close to mine: \(cell.minesInProximity)")
-         self.internalBoard.exposeCells(location: .init(cell.row, cell.col))
+         self.internalBoard.exposeCells(at: .init(cell.row, cell.col))
       }
       
       print("Cell Exposed: \(cell.minesInProximity)")

@@ -14,23 +14,17 @@ struct GameView: View {
    var body: some View {
       VStack {
          Group {
-            ScrollView([.horizontal, .vertical]) {
+            ScrollView([.horizontal, .vertical], showsIndicators: false) {
                board
             }
          }
          .frame(width: 500, height: 500, alignment: .center)
-         .padding()
-
-
-         Button {
-            if let location = selectedCell {
-               let cell = self.game.cellAt(location.row, location.col)
-               self.game.exposeCell(cell)
-            }
-         } label: {
-            Text("Expose cell")
-         }
          
+         Divider()
+
+         buttons
+         
+         Spacer()
       }
    }
    
@@ -44,6 +38,29 @@ struct GameView: View {
             .onTapGesture {
                selectedCell = BoardLocation(cell.row, cell.col)
             }
+      }
+   }
+   
+   var buttons: some View {
+      HStack {
+         // FLAG
+         Button {
+            if let location = selectedCell {
+               let cell = self.game.cellAt(location.row, location.col)
+               // flag cell
+            }
+         } label: {
+            
+         }
+         // EXPOSE
+         Button {
+            if let location = selectedCell {
+               let cell = self.game.cellAt(location.row, location.col)
+               self.game.exposeCell(cell)
+            }
+         } label: {
+            Text("Expose cell")
+         }
       }
    }
 
