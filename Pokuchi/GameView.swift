@@ -11,25 +11,28 @@ struct GameView: View {
    @ObservedObject var game: Game
    @State var selectedCell: BoardLocation?
    
+   private let itemSize: CGFloat = 50
+   
    var body: some View {
-      VStack {
-         Group {
+      GeometryReader { geoProxy in
+         VStack {
             ScrollView([.horizontal, .vertical], showsIndicators: false) {
                board
             }
+            .frame(width: geoProxy.size.width,
+                   height: geoProxy.size.height * 0.7)
+            
+            Divider()
+            
+            buttons
+            
+            Spacer()
          }
-         .frame(width: 500, height: 500, alignment: .center)
-         
-         Divider()
-
-         buttons
-         
-         Spacer()
       }
    }
    
    var board: some View {
-      BoardView(gridSize: game.columns, itemSize: 50) { (row, col) in
+      BoardView(gridSize: game.columns, itemSize: itemSize) { (row, col) in
          let cell = game.cellAt(row,col)
          let selected = Binding(get: { selectedCell?.row == cell.row && selectedCell?.col == cell.col },
                                 set: { _ in })
@@ -39,6 +42,7 @@ struct GameView: View {
                selectedCell = BoardLocation(cell.row, cell.col)
             }
       }
+      .padding()
    }
    
    var buttons: some View {
@@ -47,11 +51,13 @@ struct GameView: View {
          Button {
             if let location = selectedCell {
                let cell = self.game.cellAt(location.row, location.col)
-               // flag cell
+               self.game.flagCell(cell)
             }
          } label: {
-            
+            Text("Flag")
          }
+         
+         Spacer()
          // EXPOSE
          Button {
             if let location = selectedCell {
@@ -62,6 +68,7 @@ struct GameView: View {
             Text("Expose cell")
          }
       }
+      .padding()
    }
 
 }

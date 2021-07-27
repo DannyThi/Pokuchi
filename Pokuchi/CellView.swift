@@ -16,17 +16,36 @@ struct CellView: View {
          let shape = RoundedRectangle(cornerRadius: 5)
          
          if cell.isExposed {
-            shape.fill().foregroundColor(.white)
-            shape.stroke(lineWidth: 1.0)
-            Text("\(cell.minesInProximity)").foregroundColor(Color(.black))
+            self.exposedState(shape)
          } else {
-            shape.fill().foregroundColor(.gray)
-            if isSelected {
-               shape.stroke(lineWidth: 1.0).foregroundColor(.red)
+            self.hiddenState(shape)
+            
+            if cell.isFlagged {
+               Image(systemName: "flag.fill")
             }
-//            Text("\(cell.minesInProximity)").foregroundColor(Color(.black))
 
          }
       }
+   }
+   
+   @ViewBuilder private func exposedState<T: Shape>(_ shape: T) -> some View {
+      shape.fill().foregroundColor(.white)
+      shape.stroke(lineWidth: 1.0)
+      Text("\(cell.minesInProximity)").foregroundColor(Color(.black))
+   }
+   
+   @ViewBuilder private func hiddenState<T: Shape>(_ shape: T) -> some View {
+      shape.fill().foregroundColor(.gray)
+      if isSelected {
+         shape.stroke(lineWidth: 1.0).foregroundColor(.red)
+      }
+   }
+   
+   @ViewBuilder private func flaggedState<T: Shape>(_ shape: T) -> some View {
+      
+   }
+   
+   @ViewBuilder private func debugMode<T:Shape>(_ shape: T) -> some View {
+      Text("\(cell.minesInProximity)").foregroundColor(Color(.black))
    }
 }

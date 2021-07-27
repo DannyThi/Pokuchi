@@ -61,12 +61,15 @@ struct Board<CellContent> {
                let col = node.col + delta[1]
                
                if withinBounds(row, col) {
+                  
                   if !node.isExposed && !node.isMine {
-                     if !visited[row][col] {
-                        queue.enqueue(matrix[row][col])
-                        visited[row][col] = true
+                     #warning("THIS DOES NOT WORK. WHY?")
+                     if !node.isFlagged {
+                        if !visited[row][col] {
+                           queue.enqueue(matrix[row][col])
+                           visited[row][col] = true
+                        }
                      }
-                     #warning("we sometimes have thousands of items in the queue. we need to place the item in the queue only once.")
                   }
                }
             }
