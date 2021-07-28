@@ -16,6 +16,10 @@ struct GameView: View {
    var body: some View {
       GeometryReader { geoProxy in
          VStack {
+            header
+            
+            Divider()
+            
             ScrollView([.horizontal, .vertical], showsIndicators: false) {
                board
             }
@@ -29,6 +33,15 @@ struct GameView: View {
             Spacer()
          }
       }
+   }
+   
+   var header: some View {
+      HStack {
+         Text("Mines: \(game.numberOfMines)")
+         Spacer()
+         Text("RunningTime: \(game.runningTime)")
+      }
+      .padding()
    }
    
    var board: some View {
@@ -58,6 +71,15 @@ struct GameView: View {
          }
          
          Spacer()
+         
+         // NEWGAME
+         Button {
+            self.game.newGame()
+         } label: {
+            Text("New Game")
+         }
+         Spacer()
+         
          // EXPOSE
          Button {
             if let location = selectedCell {

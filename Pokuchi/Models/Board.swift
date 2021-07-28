@@ -19,9 +19,9 @@ struct BoardLocation {
 struct Board<CellContent> {
    private var matrix: [[Cell]] = []
    
-   private let totalMines: Int
    private var mineLocations = [BoardLocation]()
-
+   
+   let totalMines: Int
    var rows: Int { matrix.count }
    var columns: Int { matrix[0].count }
    
@@ -38,22 +38,32 @@ struct Board<CellContent> {
    }
    
    mutating func flagCell(at location: BoardLocation) {
-      self.matrix[location.row][location.col].isFlagged.toggle()
+      if !matrix[location.row][location.col].isExposed {
+         self.matrix[location.row][location.col].isFlagged.toggle()
+      }
    }
    
-   mutating func exposeCells(at location: BoardLocation) {
+   
+   mutating func exposeCells(from location: BoardLocation) {
+      let cell = matrix[location.row][location.col]
+      guard !cell.isMine else {
+         self.matrix[location.row][location.col].isExposed = true
+         return
+      }
+      
       let queue = Queue<Cell>()
       var visited = Array(repeating: Array(repeating: false, count: self.columns), count: rows)
       
       queue.enqueue(matrix[location.row][location.col])
       visited[location.row][location.col] = true
-      var count:Int = 0
+//      var count:Int = 0
       
       while !queue.isEmpty {
          let node = queue.dequeue()
+
          self.matrix[node.row][node.col].isExposed = true // EXPOSE CELL
          
-         count += 1
+//         count += 1
          
          if node.minesInProximity == 0 {
             for delta in deltas {
@@ -61,21 +71,18 @@ struct Board<CellContent> {
                let col = node.col + delta[1]
                
                if withinBounds(row, col) {
-                  
-                  if !node.isExposed && !node.isMine {
-                     #warning("THIS DOES NOT WORK. WHY?")
-                     if !node.isFlagged {
-                        if !visited[row][col] {
-                           queue.enqueue(matrix[row][col])
-                           visited[row][col] = true
-                        }
+                  let adjacent = matrix[row][col]
+                  if !adjacent.isFlagged, !adjacent.isExposed, !adjacent.isMine {
+                     if !visited[row][col] {
+                        queue.enqueue(matrix[row][col])
+                        visited[row][col] = true
                      }
                   }
                }
             }
          }
          
-         print("Queue: \(queue.count)")
+//         print("Queue: \(queue.count)")
       }
    }
    

@@ -6,12 +6,12 @@
 //
 
 import Foundation
-
-enum CellState {
-   case isFlagged
-   case isGuess
-   case isExposed
-}
+//
+//enum CellState {
+//   case isFlagged
+//   case isGuess
+//   case isExposed
+//}
 
 struct Cell: Identifiable, Hashable {
    let id = UUID().uuidString
@@ -37,15 +37,8 @@ struct Cell: Identifiable, Hashable {
    }
    
    mutating func flag() {
-      if !isExposed 
+      if !isExposed {
          self.isFlagged.toggle()
       }
    }
-}
-
-
-enum CellState {
-   case isMine
-   case isInProximityToMines(Int)
-   case isEmpty
 }

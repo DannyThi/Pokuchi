@@ -89,15 +89,10 @@
 		97091C1F269AC43000D802C5 /* Pokuchi */ = {
 			isa = PBXGroup;
 			children = (
+				97091C4C26B1FF5E00D802C5 /* Models */,
+				97091C4E26B1FF8700D802C5 /* ViewModel */,
+				97091C4B26B1FF4800D802C5 /* Views */,
 				97091C20269AC43000D802C5 /* PokuchiApp.swift */,
-				97091C22269AC43000D802C5 /* GameView.swift */,
-				97091C4726AE2D2000D802C5 /* CellView.swift */,
-				97091C4926AE47F800D802C5 /* BoardView.swift */,
-				97091C2F269AC4B000D802C5 /* Cell.swift */,
-				97091C33269C932200D802C5 /* LinkedList.swift */,
-				97091C43269D1B8F00D802C5 /* Queue.swift */,
-				97091C45269D4CB200D802C5 /* Game.swift */,
-				97091C31269ACEF500D802C5 /* Board.swift */,
 				97091C24269AC43200D802C5 /* Assets.xcassets */,
 				97091C29269AC43200D802C5 /* Info.plist */,
 				97091C26269AC43200D802C5 /* Preview Content */,
@@ -120,6 +115,43 @@
 				97091C3D269CA89400D802C5 /* Info.plist */,
 			);
 			path = PokuchiTests;
+			sourceTree = "<group>";
+		};
+		97091C4B26B1FF4800D802C5 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				97091C22269AC43000D802C5 /* GameView.swift */,
+				97091C4726AE2D2000D802C5 /* CellView.swift */,
+				97091C4926AE47F800D802C5 /* BoardView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		97091C4C26B1FF5E00D802C5 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				97091C4D26B1FF7000D802C5 /* Structures */,
+				97091C2F269AC4B000D802C5 /* Cell.swift */,
+				97091C31269ACEF500D802C5 /* Board.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		97091C4D26B1FF7000D802C5 /* Structures */ = {
+			isa = PBXGroup;
+			children = (
+				97091C33269C932200D802C5 /* LinkedList.swift */,
+				97091C43269D1B8F00D802C5 /* Queue.swift */,
+			);
+			path = Structures;
+			sourceTree = "<group>";
+		};
+		97091C4E26B1FF8700D802C5 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				97091C45269D4CB200D802C5 /* Game.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

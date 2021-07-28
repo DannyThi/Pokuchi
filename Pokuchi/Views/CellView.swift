@@ -19,11 +19,7 @@ struct CellView: View {
             self.exposedState(shape)
          } else {
             self.hiddenState(shape)
-            
-            if cell.isFlagged {
-               Image(systemName: "flag.fill")
-            }
-
+            self.flaggedState(shape)
          }
       }
    }
@@ -31,7 +27,11 @@ struct CellView: View {
    @ViewBuilder private func exposedState<T: Shape>(_ shape: T) -> some View {
       shape.fill().foregroundColor(.white)
       shape.stroke(lineWidth: 1.0)
-      Text("\(cell.minesInProximity)").foregroundColor(Color(.black))
+      if self.cell.isMine {
+         Image(systemName: "star.fill")
+      } else {
+         Text("\(cell.minesInProximity)").foregroundColor(Color(.black))
+      }
    }
    
    @ViewBuilder private func hiddenState<T: Shape>(_ shape: T) -> some View {
@@ -42,7 +42,9 @@ struct CellView: View {
    }
    
    @ViewBuilder private func flaggedState<T: Shape>(_ shape: T) -> some View {
-      
+      if cell.isFlagged {
+         Image(systemName: "flag.fill")
+      }
    }
    
    @ViewBuilder private func debugMode<T:Shape>(_ shape: T) -> some View {
