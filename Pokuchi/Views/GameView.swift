@@ -37,9 +37,11 @@ struct GameView: View {
    
    var header: some View {
       HStack {
-         Text("Mines: \(game.numberOfMines)")
+         Image(systemName: "flag.fill")
+         Text("\(game.placedFlags)")
          Spacer()
-         Text("RunningTime: \(game.runningTime)")
+         Image(systemName: "deskclock.fill")
+         Text("\(game.formattedTime)")
       }
       .padding()
    }

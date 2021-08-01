@@ -25,9 +25,14 @@ struct Board<CellContent> {
    var rows: Int { matrix.count }
    var columns: Int { matrix[0].count }
    
-   var remainingMines: Int {
+   // To determine win state
+   var correctlyFlagged: Int {
       let minesFlagged = mineLocations.filter { matrix[$0.row][$0.col].isFlagged }.count
       return totalMines - minesFlagged
+   }
+   
+   var placedFlags: Int {
+      return totalMines - matrix.flatMap { $0 }.filter { matrix[$0.row][$0.col].isFlagged }.count
    }
    
    init(rows: Int, columns: Int, totalMines: Int) {
@@ -42,7 +47,6 @@ struct Board<CellContent> {
          self.matrix[location.row][location.col].isFlagged.toggle()
       }
    }
-   
    
    mutating func exposeCells(from location: BoardLocation) {
       let cell = matrix[location.row][location.col]
@@ -62,7 +66,6 @@ struct Board<CellContent> {
          let node = queue.dequeue()
 
          self.matrix[node.row][node.col].isExposed = true // EXPOSE CELL
-         
 //         count += 1
          
          if node.minesInProximity == 0 {
