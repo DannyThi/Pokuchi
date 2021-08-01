@@ -57,7 +57,7 @@ class Game: ObservableObject {
       if gameState == .running {
          self.internalBoard.flagCell(at: location)
       }
-//      self.checkWinCondition()
+      self.checkWinCondition()
    }
    
    func exposeCell(_ cell: Cell) {
@@ -72,7 +72,7 @@ class Game: ObservableObject {
          
          if cell.isMine {
             self.gameState = .lose
-            print("Mine: END Game")
+            print("LOSE")
          }
          
          self.checkWinCondition()
@@ -80,14 +80,16 @@ class Game: ObservableObject {
    }
    
    private func checkWinCondition() {
-      if internalBoard.correctlyFlagged == 0 {
+      if internalBoard.minesCorrectlyFlagged && internalBoard.noCellsAreHidden {
          self.gameState = .win
+         print("WIN")
+         #warning("We want to expose all the cells")
       }
    }
 
    func newGame() {
       self.runningTime = 0
-      self.internalBoard = Board(rows: 10, columns: 10, totalMines: 5)
+      self.internalBoard = Board(rows: 10, columns: 10, totalMines: 2)
       self.gameState = .running
    }
 }

@@ -11,7 +11,7 @@ import SwiftUI
 struct PokuchiApp: App {
     var body: some Scene {
         WindowGroup {
-            GameView(game: Game(rows: 10, columns: 10, mines: 5))
+            GameView(game: Game(rows: 10, columns: 10, mines: 2))
         }
     }
 }

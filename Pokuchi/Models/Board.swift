@@ -25,23 +25,20 @@ struct Board<CellContent> {
    var rows: Int { matrix.count }
    var columns: Int { matrix[0].count }
    
-   // To determine win state
-//   var correctlyFlagged: Int {
-//      let minesFlagged = mineLocations.filter { matrix[$0.row][$0.col].isFlagged }.count
-//      return totalMines - minesFlagged
-//   }
-   
-   var correctlyFlagged: Int {
-      let minesFlagged = mineLocations.filter { matrix[$0.row][$0.col].cellState == .isFlagged }.count
-      return totalMines - minesFlagged
-   }
-   
 //   var placedFlags: Int {
 //      return totalMines - matrix.flatMap { $0 }.filter { matrix[$0.row][$0.col].isFlagged }.count
 //   }
 //
    var placedFlags: Int {
       return totalMines - matrix.flatMap { $0 }.filter { matrix[$0.row][$0.col].cellState == .isFlagged }.count
+   }
+   
+   var minesCorrectlyFlagged: Bool {
+      return mineLocations.allSatisfy { matrix[$0.row][$0.col].cellState == .isFlagged }
+   }
+   
+   var noCellsAreHidden: Bool {
+      return matrix.flatMap { $0 }.allSatisfy { $0.cellState != .isHidden }
    }
    
    init(rows: Int, columns: Int, totalMines: Int) {
@@ -51,17 +48,14 @@ struct Board<CellContent> {
       self.printBoard()
    }
    
-//   mutating func flagCell(at location: BoardLocation) {
-//      if !matrix[location.row][location.col].isExposed {
-//         self.matrix[location.row][location.col].isFlagged.toggle()
-//      }
-//   }
-   
    mutating func flagCell(at location: BoardLocation) {
-      if matrix[location.row][location.col].cellState == .isHidden {
-         self.matrix[location.row][location.col].cellState = .isFlagged
-      } else {
-         self.matrix[location.row][location.col].cellState = .isHidden
+      let node = matrix[location.row][location.col]
+      if node.cellState != .isExposed {
+         if node.cellState == .isHidden {
+            self.matrix[location.row][location.col].cellState = .isFlagged
+         } else {
+            self.matrix[location.row][location.col].cellState = .isHidden
+         }
       }
    }
    
@@ -99,7 +93,7 @@ struct Board<CellContent> {
                if withinBounds(row, col) {
                   let adjacent = matrix[row][col]
 //                  if !adjacent.isFlagged, !adjacent.isExposed, !adjacent.isMine {
-                  if adjacent.cellState == .isHidden, !adjacent.isMine {
+                  if adjacent.cellState != .isExposed, !adjacent.isMine {
                      if !visited[row][col] {
                         queue.enqueue(matrix[row][col])
                         visited[row][col] = true
@@ -111,6 +105,11 @@ struct Board<CellContent> {
          
 //         print("Queue: \(queue.count)")
       }
+   }
+   
+   // for end game state
+   mutating func exposeAllCells(includingMines: Bool) {
+      
    }
    
 }
