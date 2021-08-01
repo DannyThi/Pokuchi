@@ -73,15 +73,7 @@ extension Board {
    /** Flag a cell. This method will check if the current node is has not been exposed yet.
        It then toggles between flagging the cell or removing the flag.*/
    mutating func toggleFlag(at location: BoardLocation) {
-      let node = matrix[location.row][location.col]
-      if node.cellState != .isExposed {
-         if node.cellState == .isHidden {
-            self.matrix[location.row][location.col].cellState = .isFlagged
-            self.matrix[location.row][location.col].cellState = .isFlagged
-         } else {
-            self.matrix[location.row][location.col].cellState = .isHidden
-         }
-      }
+      self.matrix[location.row][location.col].toggleFlag()
    }
    
    /**
@@ -104,7 +96,7 @@ extension Board {
       
       // 1
       guard !cell.isMine else {
-         self.matrix[location.row][location.col].cellState = .isExposed
+         self.matrix[location.row][location.col].exposeCell()
          return
       }
       
@@ -119,7 +111,7 @@ extension Board {
       while !queue.isEmpty {
          let node = queue.dequeue()
 
-         self.matrix[node.row][node.col].cellState = .isExposed
+         self.matrix[node.row][node.col].exposeCell()
          
          // 4
          if node.minesInProximity == 0 {
@@ -182,7 +174,7 @@ extension Board {
          let col = Int.random(in: 0..<columns)
          
          if cellAt(row, col).isMine == false {
-            matrix[row][col].minesInProximity = -1
+            matrix[row][col].setAsMine()
             incrementMineBoundryCount(row, col)
             mineLocations.append(.init(row, col))
             mineCounter -= 1
@@ -205,7 +197,7 @@ extension Board {
    
    /** Increments the minesInProximity value of a cell by one.*/
    private mutating func incrementAtPosition(_ row: Int, _ col: Int) {
-      self.matrix[row][col].minesInProximity += 1
+      self.matrix[row][col].updateMinesInProximityByOne()
    }
 }
 
