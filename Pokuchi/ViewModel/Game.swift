@@ -63,7 +63,8 @@ class Game: ObservableObject {
    func exposeCell(_ cell: Cell) {
       if gameState == .running {
          print("Tapped cell(x: \(cell.row), y: \(cell.col))")
-         guard !cell.isExposed else {
+//         guard !cell.isExposed else {
+         guard cell.cellState != .isExposed else {
             return
          }
          

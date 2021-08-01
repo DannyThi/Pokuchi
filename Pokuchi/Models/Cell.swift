@@ -6,12 +6,12 @@
 //
 
 import Foundation
-//
-//enum CellState {
-//   case isFlagged
-//   case isGuess
-//   case isExposed
-//}
+
+enum CellState {
+   case isFlagged
+   case isExposed
+   case isHidden
+}
 
 struct Cell: Identifiable, Hashable {
    let id = UUID().uuidString
@@ -24,21 +24,34 @@ struct Cell: Identifiable, Hashable {
       minesInProximity == -1 ? true : false
    }
    
-   var isExposed: Bool = false
-   var isFlagged: Bool = false
+   var cellState: CellState = .isHidden
+//   var isExposed: Bool = false
+//   var isFlagged: Bool = false
 
    // RETURN TRUE IF THIS IS A MINE
-   @discardableResult
-   mutating func exposeCell() -> Bool {
-      if !isFlagged && !isExposed {
-         self.isExposed = true
+//   @discardableResult
+//   mutating func exposeCell() -> Bool {
+//      if !isFlagged && !isExposed {
+//         self.isExposed = true
+//      }
+//      return isMine
+//   }
+   
+   mutating func exposeCell() {
+      if self.cellState == .isHidden {
+         self.cellState = .isExposed
       }
-      return isMine
    }
    
+//   mutating func flag() {
+//      if !isExposed {
+//         self.isFlagged.toggle()
+//      }
+//   }
+   
    mutating func flag() {
-      if !isExposed {
-         self.isFlagged.toggle()
+      if self.cellState == .isHidden {
+         self.cellState = .isFlagged
       }
    }
 }

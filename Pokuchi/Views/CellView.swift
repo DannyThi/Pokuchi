@@ -15,7 +15,7 @@ struct CellView: View {
       ZStack {
          let shape = RoundedRectangle(cornerRadius: 5)
          
-         if cell.isExposed {
+         if cell.cellState == .isExposed {
             self.exposedState(shape)
          } else {
             self.hiddenState(shape)
@@ -42,7 +42,7 @@ struct CellView: View {
    }
    
    @ViewBuilder private func flaggedState<T: Shape>(_ shape: T) -> some View {
-      if cell.isFlagged {
+      if cell.cellState == .isFlagged {
          Image(systemName: "flag.fill")
       }
    }
