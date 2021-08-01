@@ -55,7 +55,7 @@ class Game: ObservableObject {
 
    func flagCell(at location: BoardLocation) {
       if gameState == .running {
-         self.internalBoard.flagCell(at: location)
+         self.internalBoard.toggleFlag(at: location)
       }
       self.checkWinCondition()
    }
