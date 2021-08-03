@@ -86,7 +86,9 @@ struct GameView: View {
          Button {
             if let location = selectedCell {
                let cell = self.game.cellAt(location.row, location.col)
-               self.game.exposeCell(cell)
+               withAnimation {
+                  self.game.exposeCell(cell)
+               }
             }
          } label: {
             Text("Expose cell")

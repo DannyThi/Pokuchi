@@ -16,7 +16,7 @@ struct BoardLocation {
    }
 }
 
-struct Board<CellContent> {
+struct Board {
    
    /** NOTE:
        Whenever we get a reference to an object on the game board (matrix), Swift will pass by value because we are building this in a struct.
@@ -35,7 +35,7 @@ struct Board<CellContent> {
    /** The location of all mines on the board for quick lookup. */
    private var mineLocations = [BoardLocation]()
    /** The total number of mines on the board. */
-   let totalMines: Int
+   private let totalMines: Int
    
    
    // FLAGS
