@@ -9,9 +9,9 @@ import SwiftUI
 
 @main
 struct PokuchiApp: App {
-    var body: some Scene {
-        WindowGroup {
-            GameView(game: Game(rows: 10, columns: 10, mines: 2))
-        }
-    }
+   var body: some Scene {
+      WindowGroup {
+         TitleScreen()
+      }
+   }
 }

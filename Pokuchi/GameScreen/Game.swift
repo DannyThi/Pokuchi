@@ -18,7 +18,6 @@ class Game: ObservableObject {
    // PRIVATE
    @Published private var internalBoard: Board // our model
    @Published private(set) var gameState: GameState = .running
-   
    @Published private var runningTime: TimeInterval = 0
    
    private lazy var timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
@@ -30,19 +29,19 @@ class Game: ObservableObject {
    var columns: Int { internalBoard.columns }
    
    /** Flags placed by the user.*/
-   var placedFlags: Int {
-      return internalBoard.placedFlags
-   }
+   var placedFlags: Int { internalBoard.placedFlags }
    
    /** The running time user-readable formatted.*/
-   var formattedTime: String {
-      return formattedTime(runningTime)
-   }
+   var formattedTime: String { formattedTime(runningTime) }
    
+   // INITIALIZATION
+   convenience init(difficulty: GameDifficulty) {
+      let data = difficulty.gameData
+      self.init(rows: data.rows, columns: data.cols, mines: data.mines)
+   }
    
    init(rows: Int, columns: Int, mines: Int) {
       self.internalBoard = Board(rows: rows, columns: columns, totalMines: mines)
-      
       self.timer.tolerance = 0.01
       RunLoop.current.add(timer, forMode: .common)
       DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
@@ -50,7 +49,7 @@ class Game: ObservableObject {
       }
    }
    
-   
+   // INTENTS
    private func updateTimer() {
       if gameState == .running {
          self.runningTime += 1

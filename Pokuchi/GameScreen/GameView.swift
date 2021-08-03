@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct GameView: View {
+   @Environment(\.presentationMode) var presentationMode
    @ObservedObject var game: Game
    @State var selectedCell: BoardLocation?
    
@@ -37,11 +38,22 @@ struct GameView: View {
    
    var header: some View {
       HStack {
-         Image(systemName: "flag.fill")
-         Text("\(game.placedFlags)")
+         Button {
+            self.presentationMode.wrappedValue.dismiss()
+         } label: {
+            Image(systemName: "chevron.left")
+         }
+         
          Spacer()
+         
          Image(systemName: "deskclock.fill")
          Text("\(game.formattedTime)")
+         
+         Spacer()
+         
+         Image(systemName: "flag.fill")
+         Text("\(game.placedFlags)")
+
       }
       .padding()
    }
