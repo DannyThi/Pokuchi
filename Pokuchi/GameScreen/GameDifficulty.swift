@@ -29,7 +29,7 @@ enum GameDifficulty: Identifiable, RawRepresentable {
    
    var gameData: GameData {
       switch self {
-      case .easy:    return (5, 5, 5)
+      case .easy:    return (8, 8, 5)
       case .medium:  return (10, 10, 10)
       case .hard:    return (15, 15, 50)
       case .insane:  return (20, 20, 100)

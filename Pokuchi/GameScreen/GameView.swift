@@ -9,6 +9,7 @@ import SwiftUI
 
 struct GameView: View {
    @Environment(\.presentationMode) var presentationMode
+   
    @ObservedObject var game: Game
    @State var selectedCell: BoardLocation?
    
@@ -17,48 +18,48 @@ struct GameView: View {
    var body: some View {
       GeometryReader { geoProxy in
          VStack {
-            header
-            
-            Divider()
-            
-            ScrollView([.horizontal, .vertical], showsIndicators: false) {
-               board
-            }
-            .frame(width: geoProxy.size.width,
-                   height: geoProxy.size.height * 0.7)
-            
-            Divider()
-            
-            buttons
+            GameViewHeader
+            GameContainer(size: geoProxy.size)
+            GameControls
             
             Spacer()
          }
       }
    }
    
-   var header: some View {
-      HStack {
-         Button {
-            self.presentationMode.wrappedValue.dismiss()
-         } label: {
-            Image(systemName: "chevron.left")
+   var GameViewHeader: some View {
+      VStack {
+         HStack {
+            Button { presentationMode.wrappedValue.dismiss() }
+            label: { Image(systemName: "chevron.left") }
+            
+            Spacer()
+            
+            Image(systemName: "deskclock.fill")
+            Text("\(game.formattedTime)")
+            
+            Spacer()
+            
+            Image(systemName: "flag.fill")
+            Text("\(game.placedFlags)")
          }
-         
-         Spacer()
-         
-         Image(systemName: "deskclock.fill")
-         Text("\(game.formattedTime)")
-         
-         Spacer()
-         
-         Image(systemName: "flag.fill")
-         Text("\(game.placedFlags)")
-
+         Divider()
       }
       .padding()
    }
    
-   var board: some View {
+   @ViewBuilder
+   private func GameContainer(size: CGSize) -> some View {
+      VStack {
+         ScrollView([.horizontal, .vertical], showsIndicators: false) {
+            board
+         }
+         .frame(width: size.width, height: size.height * 0.7)
+         Divider()
+      }
+   }
+   
+   private var board: some View {
       BoardView(gridSize: game.columns, itemSize: itemSize) { (row, col) in
          let cell = game.cellAt(row,col)
          let selected = Binding(get: { selectedCell?.row == cell.row && selectedCell?.col == cell.col },
@@ -72,7 +73,7 @@ struct GameView: View {
       .padding()
    }
    
-   var buttons: some View {
+   private var GameControls: some View {
       HStack {
          // FLAG
          Button {
@@ -111,18 +112,7 @@ struct GameView: View {
 
 }
 
-struct LabelCell: View {
-   var text: String
-   var body: some View {
-      ZStack {
-         let shape = RoundedRectangle(cornerRadius: 5)
-         shape.fill().foregroundColor(Color(.white))
-         shape.stroke(lineWidth: 1.0).foregroundColor(Color(.systemGray4))
-         Text(text)
-            .foregroundColor(Color(.systemGray4))
-      }
-   }
-}
+
 
 
 

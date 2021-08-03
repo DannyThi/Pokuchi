@@ -40,9 +40,9 @@ struct BoardView<ContentView>: View where ContentView: View {
    @ViewBuilder private func horizontalBoundaryCells(size: Int) -> some View {
       ForEach(0..<size) { index in
          if index == 0 || index == size - 1 {
-            LabelCell(text: "")
+            BoundaryCell(text: "")
          } else {
-            LabelCell(text: "\(index-1)")
+            BoundaryCell(text: "\(index-1)")
                .aspectRatio(1, contentMode: .fit)
          }
       }
@@ -59,14 +59,14 @@ struct BoardView<ContentView>: View where ContentView: View {
          
          ForEach(0..<gridSize) { row in
             // LEFT BOUNDARY CELL
-            LabelCell(text: "\(row)")
+            BoundaryCell(text: "\(row)")
             
             ForEach(0..<gridSize) { col in
                content(row, col)
             }
             
             // RIGHT BOUNDARY CELL
-            LabelCell(text: "\(row)")
+            BoundaryCell(text: "\(row)")
          }
          
          // BOTTOM BOUNDARY CELLS
@@ -76,3 +76,17 @@ struct BoardView<ContentView>: View where ContentView: View {
       }
    }
 }
+
+struct BoundaryCell: View {
+   var text: String
+   var body: some View {
+      ZStack {
+         let shape = RoundedRectangle(cornerRadius: 5)
+         shape.fill().foregroundColor(Color(.white))
+         shape.stroke(lineWidth: 1.0).foregroundColor(Color(.systemGray4))
+         Text(text)
+            .foregroundColor(Color(.systemGray4))
+      }
+   }
+}
+

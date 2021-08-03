@@ -129,8 +129,8 @@
 		97091C4B26B1FF4800D802C5 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				97091C4726AE2D2000D802C5 /* CellView.swift */,
 				97091C4926AE47F800D802C5 /* BoardView.swift */,
+				97091C4726AE2D2000D802C5 /* CellView.swift */,
 				97091C4F26B748C800D802C5 /* CustomButton.swift */,
 			);
 			path = Views;
