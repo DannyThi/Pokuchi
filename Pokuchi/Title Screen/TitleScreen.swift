@@ -8,21 +8,14 @@
 import SwiftUI
 
 struct TitleScreen: View {
-   
+   @Environment(\.colorScheme) var colorScheme
    @StateObject private var viewModel = TitleScreenViewModel()
-   
    @State private var showGameSelect: Bool = false
    
    var body: some View {
       VStack {
          Spacer()
-         VStack {
-            Text("Pokuchi")
-               .font(.largeTitle)
-            Text("A Mine Sweeper Game")
-               .font(.subheadline)
-         }
-         .padding()
+         Title
          Spacer()
          
          Button {
@@ -30,7 +23,7 @@ struct TitleScreen: View {
          } label: {
             Text("Start")
                .foregroundColor(.white)
-               .font(.headline)
+               .font(Font.system(size: 20, weight: .semibold))
                .padding()
                .frame(width: 300, height: 60)
                .background(Color.blue)
@@ -39,7 +32,23 @@ struct TitleScreen: View {
          Spacer()
       }
       .actionSheet(isPresented: $showGameSelect) { gameSelectActionSheet }
-      .fullScreenCover(isPresented: $viewModel.startGame) { GameView(game: viewModel.gameDifficulty!.game) }
+      .fullScreenCover(isPresented: $viewModel.startGame) {
+         GameView(game: viewModel.gameDifficulty!.game)
+      }
+   }
+   
+   
+   var Title: some View {
+      VStack {
+         Text("Pokuchi")
+            .font(.custom("Avenir Black", size: 60))
+            .foregroundColor(.init(red: 18/255, green: 135/255, blue: 28/255))
+//            .padding(.bottom, 4)
+         Text("A Mine Sweeper Game")
+            .font(.subheadline)
+            .foregroundColor(Color(.label))
+      }
+//         .padding()
    }
    
    var gameSelectActionSheet: ActionSheet {
@@ -59,6 +68,6 @@ struct TitleScreen: View {
 struct TitleScreen_Previews: PreviewProvider {
    static var previews: some View {
       TitleScreen()
-         .preferredColorScheme(.light)
+         .preferredColorScheme(.dark)
    }
 }

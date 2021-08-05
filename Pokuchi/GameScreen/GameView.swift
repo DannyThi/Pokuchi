@@ -112,10 +112,6 @@ struct GameView: View {
 
 }
 
-
-
-
-
 struct ContentView_Previews: PreviewProvider {
    static var previews: some View {
       GameView(game: Game(rows: 10, columns: 10, mines: 10))

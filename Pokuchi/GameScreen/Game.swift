@@ -49,7 +49,8 @@ class Game: ObservableObject {
       }
    }
    
-   // INTENTS
+   
+   // METHODS
    private func updateTimer() {
       if gameState == .running {
          self.runningTime += 1

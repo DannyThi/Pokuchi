@@ -19,10 +19,11 @@
 		97091C46269D4CB200D802C5 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97091C45269D4CB200D802C5 /* Game.swift */; };
 		97091C4826AE2D2000D802C5 /* CellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97091C4726AE2D2000D802C5 /* CellView.swift */; };
 		97091C4A26AE47F800D802C5 /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97091C4926AE47F800D802C5 /* BoardView.swift */; };
-		97091C5026B748C900D802C5 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97091C4F26B748C800D802C5 /* CustomButton.swift */; };
+		97091C5026B748C900D802C5 /* PokuchiButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97091C4F26B748C800D802C5 /* PokuchiButton.swift */; };
 		97091C5226B8CFCF00D802C5 /* TitleScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97091C5126B8CFCF00D802C5 /* TitleScreen.swift */; };
 		97091C5426B9D98B00D802C5 /* TitleScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97091C5326B9D98B00D802C5 /* TitleScreenViewModel.swift */; };
 		97091C5826B9E8CD00D802C5 /* GameDifficulty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97091C5726B9E8CD00D802C5 /* GameDifficulty.swift */; };
+		97091C5B26BC7CB400D802C5 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97091C5A26BC7CB400D802C5 /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,10 +53,12 @@
 		97091C45269D4CB200D802C5 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		97091C4726AE2D2000D802C5 /* CellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellView.swift; sourceTree = "<group>"; };
 		97091C4926AE47F800D802C5 /* BoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardView.swift; sourceTree = "<group>"; };
-		97091C4F26B748C800D802C5 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
+		97091C4F26B748C800D802C5 /* PokuchiButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokuchiButton.swift; sourceTree = "<group>"; };
 		97091C5126B8CFCF00D802C5 /* TitleScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleScreen.swift; sourceTree = "<group>"; };
 		97091C5326B9D98B00D802C5 /* TitleScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleScreenViewModel.swift; sourceTree = "<group>"; };
 		97091C5726B9E8CD00D802C5 /* GameDifficulty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameDifficulty.swift; sourceTree = "<group>"; };
+		97091C5926BA064D00D802C5 /* TODO.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = TODO.md; sourceTree = "<group>"; };
+		97091C5A26BC7CB400D802C5 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +100,7 @@
 		97091C1F269AC43000D802C5 /* Pokuchi */ = {
 			isa = PBXGroup;
 			children = (
+				97091C5926BA064D00D802C5 /* TODO.md */,
 				97091C5526B9D9C700D802C5 /* Title Screen */,
 				97091C5626B9D9F700D802C5 /* GameScreen */,
 				97091C4C26B1FF5E00D802C5 /* Models */,
@@ -131,7 +135,7 @@
 			children = (
 				97091C4926AE47F800D802C5 /* BoardView.swift */,
 				97091C4726AE2D2000D802C5 /* CellView.swift */,
-				97091C4F26B748C800D802C5 /* CustomButton.swift */,
+				97091C4F26B748C800D802C5 /* PokuchiButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -142,6 +146,7 @@
 				97091C4D26B1FF7000D802C5 /* Structures */,
 				97091C2F269AC4B000D802C5 /* Cell.swift */,
 				97091C31269ACEF500D802C5 /* Board.swift */,
+				97091C5A26BC7CB400D802C5 /* Constants.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -281,9 +286,10 @@
 				97091C21269AC43000D802C5 /* PokuchiApp.swift in Sources */,
 				97091C5426B9D98B00D802C5 /* TitleScreenViewModel.swift in Sources */,
 				97091C4826AE2D2000D802C5 /* CellView.swift in Sources */,
-				97091C5026B748C900D802C5 /* CustomButton.swift in Sources */,
+				97091C5026B748C900D802C5 /* PokuchiButton.swift in Sources */,
 				97091C34269C932200D802C5 /* LinkedList.swift in Sources */,
 				97091C4A26AE47F800D802C5 /* BoardView.swift in Sources */,
+				97091C5B26BC7CB400D802C5 /* Constants.swift in Sources */,
 				97091C32269ACEF500D802C5 /* Board.swift in Sources */,
 				97091C30269AC4B000D802C5 /* Cell.swift in Sources */,
 			);
