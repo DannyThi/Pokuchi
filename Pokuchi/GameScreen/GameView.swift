@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct GameView: View {
-   @Environment(\.presentationMode) var presentationMode
+   @Environment(\.presentationMode) private var presentationMode
    
    @ObservedObject var game: Game
    @State var selectedCell: BoardLocation?
@@ -32,12 +32,10 @@ struct GameView: View {
          HStack {
             Button { presentationMode.wrappedValue.dismiss() }
             label: { Image(systemName: "chevron.left") }
-            
             Spacer()
             
             Image(systemName: "deskclock.fill")
             Text("\(game.formattedTime)")
-            
             Spacer()
             
             Image(systemName: "flag.fill")
@@ -45,7 +43,7 @@ struct GameView: View {
          }
          Divider()
       }
-      .padding()
+         .padding([.horizontal, .top])
    }
    
    @ViewBuilder
@@ -54,7 +52,8 @@ struct GameView: View {
          ScrollView([.horizontal, .vertical], showsIndicators: false) {
             board
          }
-         .frame(width: size.width, height: size.height * 0.7)
+         .frame(width: size.width)
+         .frame(idealHeight: size.height * 0.7)
          Divider()
       }
    }
@@ -75,39 +74,51 @@ struct GameView: View {
    
    private var GameControls: some View {
       HStack {
-         // FLAG
-         Button {
-            if let location = selectedCell {
-               let cell = self.game.cellAt(location.row, location.col)
-               self.game.flagCell(cell)
-            }
-         } label: {
-            Text("Flag")
-         }
-         
          Spacer()
-         
-         // NEWGAME
-         Button {
-            self.game.newGame()
-         } label: {
-            Text("New Game")
-         }
+         FlagButton
+         Spacer(minLength: 20)
+         ExposeButton
          Spacer()
-         
-         // EXPOSE
-         Button {
-            if let location = selectedCell {
-               let cell = self.game.cellAt(location.row, location.col)
-               withAnimation {
-                  self.game.exposeCell(cell)
-               }
-            }
-         } label: {
-            Text("Expose cell")
-         }
       }
       .padding()
+   }
+   
+   var ExposeButton: some View {
+      Button {
+         if let location = selectedCell {
+            let cell = self.game.cellAt(location.row, location.col)
+            withAnimation {
+               self.game.exposeCell(cell)
+            }
+         }
+      } label: {
+         Text("Expose cell")
+      }
+         .foregroundColor(.white)
+         .font(Font.system(size: 20, weight: .regular))
+         .padding()
+         .frame(height: 44)
+         .frame(minWidth: 140)
+         .background(Color.main)
+         .cornerRadius(30)
+   }
+   
+   var FlagButton: some View {
+      Button {
+         if let location = selectedCell {
+            let cell = self.game.cellAt(location.row, location.col)
+            self.game.flagCell(cell)
+         }
+      } label: {
+         Text("Flag")
+      }
+         .foregroundColor(.white)
+         .font(Font.system(size: 20, weight: .regular))
+         .padding()
+         .frame(height: 44)
+         .frame(minWidth: 100)
+         .background(Color.pink)
+         .cornerRadius(30)
    }
 
 }
@@ -118,3 +129,10 @@ struct ContentView_Previews: PreviewProvider {
          .preferredColorScheme(.light)
    }
 }
+
+//         // NEWGAME
+//         Button {
+//            self.game.newGame()
+//         } label: {
+//            Text("New Game")
+//         }

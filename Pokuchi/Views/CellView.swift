@@ -7,9 +7,14 @@
 
 import SwiftUI
 
+fileprivate struct ImageSeeds {
+   static let grassSeedLimit = 10
+}
+
 struct CellView: View, Animatable {
    var cell: Cell
    @Binding var isSelected: Bool
+   @State private var imageSeed: Int
 
    var animatableData: Double {
       get { rotation }
@@ -19,36 +24,40 @@ struct CellView: View, Animatable {
 
    init(cell: Cell, isSelected: Binding<Bool>) {
       self.cell = cell
+      self.imageSeed = Int.random(in: 0...ImageSeeds.grassSeedLimit)
       self._isSelected = isSelected
       rotation = cell.cellState == .isExposed ? 180 : 0
    }
 
    var body: some View {
-      
-//      ZStack {
-//         // card
-//         let shape = Color.clear.cornerRadius(5)
-//         if rotation > 90 {
-//            shape.foregroundColor(.white)
-//         } else {
-//            shape.foregroundColor(.green)
-//         }
-//
-//         if cell.cellState == .isFlagged {
-//
-//         }
-//      }
-      
-      ZStack {
-         let shape = RoundedRectangle(cornerRadius: 5)
-         if rotation > 90 {
-            self.exposedState(shape)
-         } else {
-            self.hiddenState(shape)
-            self.flaggedState()
+      GeometryReader { proxy in
+         ZStack {
+            let shape = RoundedRectangle(cornerRadius: 5)
+
+            if rotation > 90 {
+               self.exposedState(shape)
+            } else {
+               GrassTile
+               FlagTile
+            }
+         }
+         .rotation3DEffect(.degrees(rotation), axis: (0, 1, 0))
+      }
+   }
+   
+   private var GrassTile: some View {
+      Image("grass_tile_\(imageSeed)")
+         .resizable()
+         .border(isSelected ? Color.red : Color.clear)
+   }
+   
+   private var FlagTile: some View {
+      Group {
+         if cell.cellState == .isFlagged {
+            Image("flag")
+               .resizable()
          }
       }
-      .rotation3DEffect(.degrees(rotation), axis: (0, 1, 0))
    }
 
    @ViewBuilder private func exposedState<T: Shape>(_ shape: T) -> some View {
@@ -59,25 +68,21 @@ struct CellView: View, Animatable {
          if self.cell.isMine {
             Image(systemName: "star.fill")
          } else {
-            Text("\(cell.minesInProximity)").foregroundColor(Color(.black))
+            let displayText = cell.minesInProximity == 0 ? "" : "\(cell.minesInProximity)"
+            Text(displayText).foregroundColor(Color(.black))
                .rotation3DEffect(.degrees(rotation), axis: (0, 1, 0)
             )
          }
       }
    }
-
-   @ViewBuilder private func hiddenState<T: Shape>(_ shape: T) -> some View {
-      shape.fill().foregroundColor(.green)
-      if isSelected {
-         shape.stroke(lineWidth: 2.0).foregroundColor(.red)
+   
+   @ViewBuilder private func hiddenState<Content: View>(_ content: Content) -> some View {
+      ZStack {
+         content
       }
+      
    }
-
-   @ViewBuilder private func flaggedState() -> some View {
-      if cell.cellState == .isFlagged {
-         Image(systemName: "flag.fill")
-      }
-   }
+   
 
    @ViewBuilder private func debugMode<T:Shape>(_ shape: T) -> some View {
       Text("\(cell.minesInProximity)").foregroundColor(Color(.black))

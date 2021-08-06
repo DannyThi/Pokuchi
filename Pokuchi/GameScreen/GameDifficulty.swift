@@ -10,33 +10,29 @@ import Foundation
 typealias GameData = (rows: Int, cols: Int, mines: Int)
 
 enum GameDifficulty: Identifiable, RawRepresentable {
-   
    case easy, medium, hard, insane, debug
    case custom(rows: Int, cols: Int, mines: Int)
    
-   var game: Game {
-      switch self {
-      case .easy:    return Game(rows: 5, columns: 5, mines: 5)
-      case .medium:  return Game(rows: 10, columns: 10, mines: 10)
-      case .hard:    return Game(rows: 15, columns: 15, mines: 50)
-      case .insane:  return Game(rows: 20, columns: 20, mines: 100)
-      case .debug:   return Game(rows: 10, columns: 10, mines: 3)
-
-      case let .custom(rows, cols, mines):
-         return Game(rows: rows, columns: cols, mines: mines)
-      }
-   }
-   
    var gameData: GameData {
       switch self {
-      case .easy:    return (8, 8, 5)
-      case .medium:  return (10, 10, 10)
-      case .hard:    return (15, 15, 50)
-      case .insane:  return (20, 20, 100)
+      case .easy:    return (8, 8, 10)
+      case .medium:  return (12, 12, 15)
+      case .hard:    return (12, 12, 30)
+      case .insane:  return (20, 20, 30)
       case .debug:   return (10, 10, 3)
          
       case let .custom(rows, cols, mines):
          return (rows,cols,mines)
+      }
+   }
+   
+   var game: Game {
+      switch self {
+      case let .custom(rows, cols, mines):
+         return Game(rows: rows, columns: cols, mines: mines)
+         
+      default:
+         return Game(rows: self.gameData.rows, columns: self.gameData.cols, mines: self.gameData.mines)
       }
    }
    

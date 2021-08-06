@@ -17,18 +17,7 @@ struct TitleScreen: View {
          Spacer()
          Title
          Spacer()
-         
-         Button {
-            self.showGameSelect = true
-         } label: {
-            Text("Start")
-               .foregroundColor(.white)
-               .font(Font.system(size: 20, weight: .semibold))
-               .padding()
-               .frame(width: 300, height: 60)
-               .background(Color.blue)
-               .cornerRadius(30)
-         }
+         StartButton
          Spacer()
       }
       .actionSheet(isPresented: $showGameSelect) { gameSelectActionSheet }
@@ -37,18 +26,30 @@ struct TitleScreen: View {
       }
    }
    
-   
    var Title: some View {
       VStack {
          Text("Pokuchi")
             .font(.custom("Avenir Black", size: 60))
-            .foregroundColor(.init(red: 18/255, green: 135/255, blue: 28/255))
-//            .padding(.bottom, 4)
+            .foregroundColor(Color(AppConstants.shared.mainColor))
          Text("A Mine Sweeper Game")
-            .font(.subheadline)
+            .font(Font.system(size: 20, weight: .light))
             .foregroundColor(Color(.label))
       }
-//         .padding()
+   }
+   
+   var StartButton: some View {
+      Button {
+         self.showGameSelect = true
+      } label: {
+         Text("Start")
+            .foregroundColor(.white)
+            .font(Font.system(size: 20, weight: .semibold))
+            .padding()
+            .frame(height: 60)
+            .frame(maxWidth: 300)
+            .background(Color.blue)
+            .cornerRadius(30)
+      }
    }
    
    var gameSelectActionSheet: ActionSheet {
@@ -60,7 +61,6 @@ struct TitleScreen: View {
          .default(Text("Insane"), action: { viewModel.gameDifficulty = .insane }),
       ])
    }
-
 }
 
 
@@ -68,6 +68,6 @@ struct TitleScreen: View {
 struct TitleScreen_Previews: PreviewProvider {
    static var previews: some View {
       TitleScreen()
-         .preferredColorScheme(.dark)
+         .preferredColorScheme(.light)
    }
 }

@@ -7,6 +7,10 @@
 
 import SwiftUI
 
+fileprivate struct BoardConstants {
+   static let cellSpacing: CGFloat = 0
+}
+
 struct BoardView<ContentView>: View where ContentView: View {
    private let gridSize: Int
    private var gridSizeWithBoundary: Int { self.displaysBoundaryCells ? gridSize + 2 : gridSize }
@@ -20,7 +24,7 @@ struct BoardView<ContentView>: View where ContentView: View {
    private var gridItems: [GridItem]
    
    
-   init(gridSize: Int, itemSize: CGFloat? = 50, spacing: CGFloat? = 1,
+   init(gridSize: Int, itemSize: CGFloat? = 50, spacing: CGFloat? = BoardConstants.cellSpacing,
         displaysBoundaryCells: Bool? = true, @ViewBuilder content: @escaping (Int, Int) -> ContentView) {
       
       self.gridSize = gridSize

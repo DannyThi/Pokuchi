@@ -7,21 +7,37 @@
 
 import SwiftUI
 
+#warning("TO BE COMPLETED")
 struct AppConstants {
-   @Environment(\.colorScheme) var colorScheme
-   
-   static var shared = AppConstants()
    private init() {}
+   static let shared = AppConstants()
    
-   var mainColor: UIColor {
-      return colorScheme == .light ?
-         UIColor(red: 18/255, green: 135/255, blue: 28/255, alpha: 1) :
-         UIColor(red: 18/255, green: 135/255, blue: 28/255, alpha: 1)
+   // PRIVATE
+   private let appColors = AppColors()
+   
+   
+   // PUBLIC
+   var mainColor: UIColor { appColors.main }
+//   var customDarkModeBlack: UIColor {}
+   
+   
+   private struct AppColors {
+      @Environment(\.colorScheme) private var colorScheme
+
+      var main: UIColor {
+         return UIColor(named: "AccentColor")!
+      }
+      
+      
+   }
+}
+
+extension Color {
+   static var main: Color {
+      Color(AppConstants.shared.mainColor)
    }
    
-   var customeDarkModeBlack: UIColor {
-      return .black
-   }
-   
-   
+//   var customBackground: Color {
+//
+//   }
 }
