@@ -6,11 +6,17 @@
 //
 
 import Foundation
+import Combine
 
 enum GameState {
    case win
    case lose
    case running
+}
+
+fileprivate struct Constants {
+   static var showdialogBoxTimeInterval: Double = 2
+   static var timerStartDelay: Double = 2
 }
 
 class Game: ObservableObject {
@@ -19,10 +25,14 @@ class Game: ObservableObject {
    @Published private var internalBoard: Board // our model
    @Published private(set) var gameState: GameState = .running
    @Published private var runningTime: TimeInterval = 0
+
+   @Published var showDialogBox: Bool = false
    
    private lazy var timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
       self.updateTimer()
    }
+   
+   private var cancellables = Set<AnyCancellable>()
    
    // PUBLIC
    var rows: Int { internalBoard.rows }
@@ -44,9 +54,24 @@ class Game: ObservableObject {
       self.internalBoard = Board(rows: rows, columns: columns, totalMines: mines)
       self.timer.tolerance = 0.01
       RunLoop.current.add(timer, forMode: .common)
-      DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+      DispatchQueue.main.asyncAfter(deadline: .now() + Constants.timerStartDelay) {
          self.timer.fire()
       }
+      
+      $gameState
+         .receive(on: RunLoop.main)
+         .sink { value in
+            switch value {
+            case .lose:
+               print("LOSE")
+               self.endGame()
+            case .win:
+               print("WIN")
+            case .running:
+               print("RUNNING")
+            }
+         }
+         .store(in: &cancellables)
    }
    
    
@@ -64,24 +89,20 @@ class Game: ObservableObject {
       self.checkWinCondition()
    }
    
-   
    func exposeCell(_ cell: Cell) {
       if gameState == .running {
          print("Tapped cell(row: \(cell.row), col: \(cell.col))")
-         guard cell.cellState != .isExposed else {
-            return
-         }
+         guard cell.cellState != .isExposed else { return }
          
          self.internalBoard.exposeCells(from: .init(cell.row, cell.col))
-         
          if cell.isMine {
             self.gameState = .lose
-            print("LOSE")
          }
-         
          self.checkWinCondition()
       }
    }
+   
+
    
    /** Determines if the game is won.*/
    private func checkWinCondition() {
@@ -90,12 +111,16 @@ class Game: ObservableObject {
          print("WIN")
       }
    }
+   
+   func endGame() {
+//      self.internalBoard.exposeMines()
+      DispatchQueue.main.asyncAfter(deadline: .now() + Constants.showdialogBoxTimeInterval) {
+         self.showDialogBox = true
+      }
+   }
 
-   // FIXME: - remove this when when we have completed the game and interface
-   func newGame() {
-      self.runningTime = 0
-      self.internalBoard = Board(rows: 10, columns: 10, totalMines: 2)
-      self.gameState = .running
+   static func newGame(difficulty: GameDifficulty) -> Game {
+      return Game(difficulty: difficulty)
    }
 }
 

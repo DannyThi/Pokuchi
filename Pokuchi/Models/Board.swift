@@ -67,7 +67,7 @@ struct Board {
 }
 
 
-// MARK: -
+// MARK: - ACTIONS
 extension Board {
    
    /** Flag a cell. This method will check if the current node is has not been exposed yet.
@@ -138,9 +138,15 @@ extension Board {
    
    // FIXME: - expose all cells
    // for end game state
-   mutating func exposeAllCells(includingMines: Bool) {
-      
-   }
+//   mutating func exposeAllCells(includingMines: Bool) {
+//      
+//   }
+//   
+//   mutating func exposeMines() {
+//      for location in mineLocations {
+//         self.matrix[location.row][location.col].exposeCell()
+//      }
+//   }
    
 }
 

@@ -7,43 +7,90 @@
 
 import SwiftUI
 
+fileprivate struct Constants {
+   static let boardHeightMultiplier: CGFloat = 0.6
+   static let cellSize: CGFloat = 50
+}
+
 struct GameView: View {
    @Environment(\.presentationMode) private var presentationMode
    
    @ObservedObject var game: Game
    @State var selectedCell: BoardLocation?
    
-   private let itemSize: CGFloat = 50
-   
+
    var body: some View {
       GeometryReader { geoProxy in
          VStack {
             GameViewHeader
             GameContainer(size: geoProxy.size)
             GameControls
-            
             Spacer()
          }
+         .dialogBox(isPresented: Binding(get: { self.game.showDialogBox == true }, set: { _ in })) {
+            VStack {
+               Text("New Games?")
+                  .padding()
+               Button {
+                  // New game
+                  #warning("Show difficulty select")
+                  
+               } label: {
+                  Text("New Game")
+               }
+               Button {
+                  self.presentationMode.wrappedValue.dismiss()
+               } label: {
+                  Text("Main Menu")
+               }
+            }
+            .padding()
+         }
+         
       }
    }
    
    var GameViewHeader: some View {
       VStack {
-         HStack {
-            Button { presentationMode.wrappedValue.dismiss() }
-            label: { Image(systemName: "chevron.left") }
-            Spacer()
+         ZStack {
+            VStack {
+               GameTimer
+            }
             
-            Image(systemName: "deskclock.fill")
-            Text("\(game.formattedTime)")
-            Spacer()
-            
-            Image(systemName: "flag.fill")
-            Text("\(game.placedFlags)")
+            HStack {
+               BackButton
+               Spacer()
+               FlagCounter
+            }
          }
+         .padding([.horizontal, .top])
          Divider()
       }
-         .padding([.horizontal, .top])
+   }
+   
+   private var GameTimer: some View {
+      HStack {
+         Image("clock_icon")
+            .resizable()
+            .frame(width: 20, height: 20)
+         Text("\(game.formattedTime)")
+      }
+   }
+   
+   private var BackButton: some View {
+      HStack {
+         Button { presentationMode.wrappedValue.dismiss() }
+         label: { Image(systemName: "chevron.left") }
+      }
+   }
+   
+   private var FlagCounter: some View {
+      HStack {
+         Image("flag_icon")
+            .resizable()
+            .frame(width: 20, height: 20)
+         Text("\(game.placedFlags)")
+      }
    }
    
    @ViewBuilder
@@ -53,13 +100,13 @@ struct GameView: View {
             board
          }
          .frame(width: size.width)
-         .frame(idealHeight: size.height * 0.7)
+         .frame(minHeight: size.height * Constants.boardHeightMultiplier)
          Divider()
       }
    }
    
    private var board: some View {
-      BoardView(gridSize: game.columns, itemSize: itemSize) { (row, col) in
+      BoardView(gridSize: game.columns, itemSize: Constants.cellSize) { (row, col) in
          let cell = game.cellAt(row,col)
          let selected = Binding(get: { selectedCell?.row == cell.row && selectedCell?.col == cell.col },
                                 set: { _ in })

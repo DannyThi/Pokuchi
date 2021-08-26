@@ -15,10 +15,10 @@ enum GameDifficulty: Identifiable, RawRepresentable {
    
    var gameData: GameData {
       switch self {
-      case .easy:    return (8, 8, 10)
+      case .easy:    return (8, 8, 5)
       case .medium:  return (12, 12, 15)
       case .hard:    return (12, 12, 30)
-      case .insane:  return (20, 20, 30)
+      case .insane:  return (20, 20, 60)
       case .debug:   return (10, 10, 3)
          
       case let .custom(rows, cols, mines):
