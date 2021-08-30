@@ -13,6 +13,12 @@ struct TitleScreen: View {
    @State private var showGameSelect: Bool = false
    
    var body: some View {
+      let gameDifficultyBinding = Binding(get: {
+         self.viewModel.gameDifficulty
+      }, set: { value in
+         self.viewModel.gameDifficulty = value
+      })
+      
       VStack {
          Spacer()
          Title
@@ -20,7 +26,7 @@ struct TitleScreen: View {
          StartButton
          Spacer()
       }
-      .actionSheet(isPresented: $showGameSelect) { gameSelectActionSheet }
+      .newGameMenu(isPresented: $showGameSelect, difficulty: gameDifficultyBinding)
       .fullScreenCover(isPresented: $viewModel.startGame) {
          GameView(game: viewModel.gameDifficulty!.game)
       }
@@ -50,16 +56,6 @@ struct TitleScreen: View {
             .background(Color.blue)
             .cornerRadius(30)
       }
-   }
-   
-   var gameSelectActionSheet: ActionSheet {
-      ActionSheet(title: Text("Choose a difficulty"), buttons: [
-         .cancel(),
-         .default(Text("Easy"), action: { viewModel.gameDifficulty = .easy }),
-         .default(Text("Medium"), action: { viewModel.gameDifficulty = .medium }),
-         .default(Text("Hard"), action: { viewModel.gameDifficulty = .hard }),
-         .default(Text("Insane"), action: { viewModel.gameDifficulty = .insane }),
-      ])
    }
 }
 

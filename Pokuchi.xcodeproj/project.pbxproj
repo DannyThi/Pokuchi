@@ -24,6 +24,7 @@
 		97091C5426B9D98B00D802C5 /* TitleScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97091C5326B9D98B00D802C5 /* TitleScreenViewModel.swift */; };
 		97091C5826B9E8CD00D802C5 /* GameDifficulty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97091C5726B9E8CD00D802C5 /* GameDifficulty.swift */; };
 		97091C5B26BC7CB400D802C5 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97091C5A26BC7CB400D802C5 /* Constants.swift */; };
+		9715EFB326DC5C080025622A /* CapsuleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9715EFB226DC5C080025622A /* CapsuleButton.swift */; };
 		97655F2A26C346EA006981A1 /* DialogueBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97655F2926C346EA006981A1 /* DialogueBox.swift */; };
 		97CC9A7026CEF2120054260D /* SizePreferenceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97CC9A6F26CEF2120054260D /* SizePreferenceKey.swift */; };
 		97CC9A7426CF3CAD0054260D /* NewGameMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97CC9A7326CF3CAD0054260D /* NewGameMenu.swift */; };
@@ -62,6 +63,7 @@
 		97091C5726B9E8CD00D802C5 /* GameDifficulty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameDifficulty.swift; sourceTree = "<group>"; };
 		97091C5926BA064D00D802C5 /* TODO.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = TODO.md; sourceTree = "<group>"; };
 		97091C5A26BC7CB400D802C5 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		9715EFB226DC5C080025622A /* CapsuleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapsuleButton.swift; sourceTree = "<group>"; };
 		97655F2926C346EA006981A1 /* DialogueBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogueBox.swift; sourceTree = "<group>"; };
 		97CC9A6F26CEF2120054260D /* SizePreferenceKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizePreferenceKey.swift; sourceTree = "<group>"; };
 		97CC9A7326CF3CAD0054260D /* NewGameMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewGameMenu.swift; sourceTree = "<group>"; };
@@ -144,6 +146,7 @@
 				97091C4F26B748C800D802C5 /* PokuchiButton.swift */,
 				97CC9A7226CF3C920054260D /* NewGameMenu */,
 				97CC9A7126CF3C780054260D /* DialogBox */,
+				9715EFB226DC5C080025622A /* CapsuleButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -304,6 +307,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				97091C5826B9E8CD00D802C5 /* GameDifficulty.swift in Sources */,
+				9715EFB326DC5C080025622A /* CapsuleButton.swift in Sources */,
 				97091C23269AC43000D802C5 /* GameView.swift in Sources */,
 				97091C44269D1B8F00D802C5 /* Queue.swift in Sources */,
 				97091C5226B8CFCF00D802C5 /* TitleScreen.swift in Sources */,

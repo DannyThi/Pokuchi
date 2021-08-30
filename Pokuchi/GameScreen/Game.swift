@@ -15,7 +15,6 @@ enum GameState {
 }
 
 fileprivate struct Constants {
-   static var showdialogBoxTimeInterval: Double = 2
    static var timerStartDelay: Double = 2
 }
 
@@ -25,8 +24,6 @@ class Game: ObservableObject {
    @Published private var internalBoard: Board // our model
    @Published private(set) var gameState: GameState = .running
    @Published private var runningTime: TimeInterval = 0
-
-   @Published var showDialogBox: Bool = false
    
    private lazy var timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
       self.updateTimer()
@@ -64,7 +61,6 @@ class Game: ObservableObject {
             switch value {
             case .lose:
                print("LOSE")
-               self.endGame()
             case .win:
                print("WIN")
             case .running:
@@ -111,13 +107,7 @@ class Game: ObservableObject {
          print("WIN")
       }
    }
-   
-   func endGame() {
-//      self.internalBoard.exposeMines()
-      DispatchQueue.main.asyncAfter(deadline: .now() + Constants.showdialogBoxTimeInterval) {
-         self.showDialogBox = true
-      }
-   }
+
 
    static func newGame(difficulty: GameDifficulty) -> Game {
       return Game(difficulty: difficulty)

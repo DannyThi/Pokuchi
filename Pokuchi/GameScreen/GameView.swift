@@ -8,6 +8,7 @@
 import SwiftUI
 
 fileprivate struct Constants {
+   static let showDialogBoxDelay: Double = 1
    static let boardHeightMultiplier: CGFloat = 0.6
    static let cellSize: CGFloat = 50
 }
@@ -15,10 +16,18 @@ fileprivate struct Constants {
 struct GameView: View {
    @Environment(\.presentationMode) private var presentationMode
    
-   @ObservedObject var game: Game
+   @StateObject var game: Game
    @State var selectedCell: BoardLocation?
    
-
+   @State private var newGameDifficulty: GameDifficulty?
+   @State private var showDialogBox: Bool = false
+   @State private var showDifficultySelect: Bool = false
+   @State private var startNewGame: Bool = false
+   
+   init(game: Game) {
+      self._game = StateObject(wrappedValue: game)
+   }
+   
    var body: some View {
       GeometryReader { geoProxy in
          VStack {
@@ -27,29 +36,74 @@ struct GameView: View {
             GameControls
             Spacer()
          }
-         .dialogBox(isPresented: Binding(get: { self.game.showDialogBox == true }, set: { _ in })) {
-            VStack {
-               Text("New Games?")
-                  .padding()
-               Button {
-                  // New game
-                  #warning("Show difficulty select")
-                  
-               } label: {
-                  Text("New Game")
-               }
-               Button {
-                  self.presentationMode.wrappedValue.dismiss()
-               } label: {
-                  Text("Main Menu")
-               }
-            }
-            .padding()
-         }
+         .onChange(of: self.game.gameState) { GameStateChangeHandler(state: $0) }
+         .dialogBox(isPresented: $showDialogBox) { DialogBoxContents }
+         
+         .newGameMenu(isPresented: $showDifficultySelect, difficulty: Binding {
+            self.newGameDifficulty
+         } set: { value in
+//            self.newGameDifficulty = value
+         })
+
          
       }
    }
-   
+}
+
+
+// GAMESTATE
+
+extension GameView {
+   #warning("TODO")
+   private func GameStateChangeHandler(state: GameState) {
+      switch state {
+      case .lose:
+         DispatchQueue.main.asyncAfter(deadline: .now() + Constants.showDialogBoxDelay) {
+            self.showDialogBox = true
+         }
+      default:
+         print("Default")
+      }
+   }
+}
+
+
+// DIALOG BOX
+
+extension GameView {
+   private var DialogBoxContents: some View {
+      VStack {
+         Text("Start a new game?")
+            .padding()
+         
+         HStack {
+            Button { self.showDifficultySelect = true }
+            label: { Text("New Game") }
+               .foregroundColor(.white)
+               .font(Font.system(size: 12, weight: .regular))
+               .padding()
+               .background(Color.blue)
+               .cornerRadius(30)
+            
+            Spacer()
+            
+            Button { self.presentationMode.wrappedValue.dismiss() }
+            label: { Text("Main Menu") }
+               .foregroundColor(.white)
+               .font(Font.system(size: 12, weight: .regular))
+               .padding()
+               .background(Color.green)
+               .cornerRadius(30)
+         }
+         .padding()
+      }
+      .padding()
+   }
+}
+
+
+// HEADER
+extension GameView {
    var GameViewHeader: some View {
       VStack {
          ZStack {
@@ -67,7 +121,7 @@ struct GameView: View {
          Divider()
       }
    }
-   
+
    private var GameTimer: some View {
       HStack {
          Image("clock_icon")
@@ -93,6 +147,10 @@ struct GameView: View {
       }
    }
    
+}
+
+// GAMEBOARD
+extension GameView {
    @ViewBuilder
    private func GameContainer(size: CGSize) -> some View {
       VStack {
@@ -176,10 +234,3 @@ struct ContentView_Previews: PreviewProvider {
          .preferredColorScheme(.light)
    }
 }
-
-//         // NEWGAME
-//         Button {
-//            self.game.newGame()
-//         } label: {
-//            Text("New Game")
-//         }

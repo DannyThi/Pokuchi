@@ -10,14 +10,15 @@ import SwiftUI
 struct NewGameMenu: ViewModifier {
    
    @Binding var isPresented: Bool
-   @Binding var difficulty: GameDifficulty
+   @Binding var difficulty: GameDifficulty?
    
    func body(content: Content) -> some View {
       if isPresented {
          content
             .actionSheet(isPresented: $isPresented) { gameSelectActionSheet }
+      } else {
+         content
       }
-      content
    }
    
    var gameSelectActionSheet: ActionSheet {
@@ -32,7 +33,7 @@ struct NewGameMenu: ViewModifier {
 }
 
 extension View {
-   func newGameMenu(isPresented: Binding<Bool>, difficulty: Binding<GameDifficulty>) -> some View {
+   func newGameMenu(isPresented: Binding<Bool>, difficulty: Binding<GameDifficulty?>) -> some View {
       self.modifier(NewGameMenu(isPresented: isPresented, difficulty: difficulty))
    }
 }

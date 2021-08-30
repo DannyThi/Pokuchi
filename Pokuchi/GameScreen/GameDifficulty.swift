@@ -9,7 +9,7 @@ import Foundation
 
 typealias GameData = (rows: Int, cols: Int, mines: Int)
 
-enum GameDifficulty: Identifiable, RawRepresentable {
+enum GameDifficulty: Identifiable, Equatable, RawRepresentable {
    case easy, medium, hard, insane, debug
    case custom(rows: Int, cols: Int, mines: Int)
    
