@@ -37,14 +37,9 @@ struct GameView: View {
             Spacer()
          }
          .onChange(of: self.game.gameState) { GameStateChangeHandler(state: $0) }
+         .onChange(of: newGameDifficulty) { self.game.newGame(difficulty: $0!) }
          .dialogBox(isPresented: $showDialogBox) { DialogBoxContents }
-         
-         .newGameMenu(isPresented: $showDifficultySelect, difficulty: Binding {
-            self.newGameDifficulty
-         } set: { value in
-//            self.newGameDifficulty = value
-         })
-
+         .newGameMenu(isPresented: $showDifficultySelect, difficulty: $newGameDifficulty)
          
       }
    }
@@ -61,6 +56,8 @@ extension GameView {
          DispatchQueue.main.asyncAfter(deadline: .now() + Constants.showDialogBoxDelay) {
             self.showDialogBox = true
          }
+      case .running:
+         self.showDialogBox = false
       default:
          print("Default")
       }
@@ -76,26 +73,25 @@ extension GameView {
          Text("Start a new game?")
             .padding()
          
-         HStack {
+         HStack(spacing: 16) {
             Button { self.showDifficultySelect = true }
             label: { Text("New Game") }
                .foregroundColor(.white)
-               .font(Font.system(size: 12, weight: .regular))
+               .font(Font.system(size: 14, weight: .semibold))
                .padding()
                .background(Color.blue)
                .cornerRadius(30)
             
-            Spacer()
             
             Button { self.presentationMode.wrappedValue.dismiss() }
             label: { Text("Main Menu") }
                .foregroundColor(.white)
-               .font(Font.system(size: 12, weight: .regular))
+               .font(Font.system(size: 14, weight: .semibold))
                .padding()
                .background(Color.green)
                .cornerRadius(30)
+
          }
-         .padding()
       }
       .padding()
    }

@@ -98,9 +98,7 @@ class Game: ObservableObject {
       }
    }
    
-
-   
-   /** Determines if the game is won.*/
+   /** Determines if the game is won. */
    private func checkWinCondition() {
       if internalBoard.minesCorrectlyFlagged && internalBoard.noCellsAreHidden {
          self.gameState = .win
@@ -109,8 +107,15 @@ class Game: ObservableObject {
    }
 
 
-   static func newGame(difficulty: GameDifficulty) -> Game {
-      return Game(difficulty: difficulty)
+   func newGame(difficulty: GameDifficulty) {
+      self.internalBoard = Board(rows: difficulty.gameData.rows,
+                                 columns: difficulty.gameData.cols,
+                                 totalMines: difficulty.gameData.mines)
+      self.runningTime = 0
+      self.gameState = .running
+      DispatchQueue.main.asyncAfter(deadline: .now() + Constants.timerStartDelay) {
+         self.timer.fire()
+      }
    }
 }
 
